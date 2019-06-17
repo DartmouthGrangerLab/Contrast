@@ -1,0 +1,202 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>framework.stimulus &#8212; Framework 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Framework 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for framework.stimulus</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">=========================================================</span>
+<span class="sd">Stimulus Library</span>
+<span class="sd">=========================================================</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1">#print(__doc__)</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">PIL.Image</span> <span class="k">as</span> <span class="nn">img</span>
+
+<span class="c1">## LOAD IMAGES #####################################################################</span>
+
+<div class="viewcode-block" id="load_image"><a class="viewcode-back" href="../../reference/index.html#framework.stimulus.load_image">[docs]</a><span class="k">def</span> <span class="nf">load_image</span><span class="p">(</span><span class="n">dname</span><span class="o">=</span><span class="s1">&#39;images/&#39;</span><span class="p">,</span><span class="n">fname</span><span class="o">=</span><span class="s1">&#39;stim-01-item-01.png&#39;</span><span class="p">,</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">fullname</span> <span class="o">=</span> <span class="n">dname</span><span class="o">+</span><span class="n">fname</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fullname</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">getdata</span><span class="p">()))</span>
+    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">size</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">height</span><span class="p">,</span><span class="n">width</span><span class="p">))</span>
+
+    <span class="c1">#normalize = False</span>
+    <span class="c1">#a = np.abs(a-255) # reverse image values</span>
+
+    <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">),</span><span class="mi">255</span><span class="p">)</span>
+        <span class="c1">#a = 2*a-1  # reverses pixel values so white=0 and black = 1</span>
+    <span class="k">return</span> <span class="n">a</span></div>
+
+<div class="viewcode-block" id="load_images"><a class="viewcode-back" href="../../reference/index.html#framework.stimulus.load_images">[docs]</a><span class="k">def</span> <span class="nf">load_images</span><span class="p">(</span><span class="n">dname</span><span class="o">=</span><span class="s1">&#39;images/&#39;</span><span class="p">,</span><span class="n">fnames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;stim-01-item-03.png&#39;</span><span class="p">,</span><span class="s1">&#39;stim-01-item-01.png&#39;</span><span class="p">,</span><span class="s1">&#39;stim-01-item-02.png&#39;</span><span class="p">],</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">fnames</span><span class="p">:</span>
+        <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">load_image</span><span class="p">(</span><span class="n">dname</span><span class="o">=</span><span class="n">dname</span><span class="p">,</span><span class="n">fname</span><span class="o">=</span><span class="n">fname</span><span class="p">,</span><span class="n">normalize</span><span class="o">=</span><span class="n">normalize</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">images</span></div>
+
+<div class="viewcode-block" id="get_combined_image"><a class="viewcode-back" href="../../reference/index.html#framework.stimulus.get_combined_image">[docs]</a><span class="k">def</span> <span class="nf">get_combined_image</span><span class="p">(</span><span class="n">unit_images_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">combinations</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)):</span>
+    <span class="n">unit_images</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">unit_images_list</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">unit_images</span><span class="p">[</span><span class="n">combinations</span><span class="p">,:,:])</span>
+    <span class="k">return</span> <span class="n">image</span></div>
+
+<div class="viewcode-block" id="get_combined_images"><a class="viewcode-back" href="../../reference/index.html#framework.stimulus.get_combined_images">[docs]</a><span class="k">def</span> <span class="nf">get_combined_images</span><span class="p">(</span><span class="n">unit_images_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">combinations</span><span class="o">=</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]):</span>
+    <span class="n">unit_images</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">unit_images_list</span><span class="p">)</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">:</span>
+        <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">unit_images</span><span class="p">[</span><span class="n">c</span><span class="p">,:,:]))</span>
+    <span class="k">return</span> <span class="n">images</span></div>
+
+<div class="viewcode-block" id="save_image"><a class="viewcode-back" href="../../reference/index.html#framework.stimulus.save_image">[docs]</a><span class="k">def</span> <span class="nf">save_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">dname</span><span class="o">=</span><span class="s1">&#39;images/&#39;</span><span class="p">,</span><span class="n">fname</span><span class="o">=</span><span class="s1">&#39;stim-01-item-01.png&#39;</span><span class="p">,</span><span class="n">unnormalize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">unnormalize</span><span class="p">:</span>
+        <span class="c1">#image = np.round(((image+1.0)/2.0)*255)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">image</span><span class="o">*</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">fullname</span> <span class="o">=</span> <span class="n">dname</span><span class="o">+</span><span class="n">fname</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">)</span>
+    <span class="n">im</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">fullname</span><span class="p">,</span><span class="s2">&quot;PNG&quot;</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="normalize_images"><a class="viewcode-back" href="../../reference/index.html#framework.stimulus.normalize_images">[docs]</a><span class="k">def</span> <span class="nf">normalize_images</span><span class="p">(</span><span class="n">images</span><span class="p">,</span><span class="n">rms</span><span class="o">=</span><span class="mf">0.8</span><span class="p">):</span>
+    <span class="n">normalized_images</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">images</span><span class="p">:</span>
+        <span class="n">raw_img</span> <span class="o">=</span> <span class="n">image</span>
+
+        <span class="c1">#raw_img = -1*raw_img + 255</span>
+
+        <span class="c1"># we first need to convert it to the -1:+1 range</span>
+        <span class="c1">#raw_img = (raw_img / 255.0) * 2.0 - 1.0</span>
+        <span class="c1">#raw_img = np.abs((raw_img / 255.0)-1) * 2.0 - 1.0</span>
+        <span class="n">raw_img</span> <span class="o">=</span> <span class="n">raw_img</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">raw_img</span><span class="p">)</span>
+        <span class="n">raw_img</span> <span class="o">=</span> <span class="n">raw_img</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">raw_img</span><span class="p">))</span>
+        <span class="n">raw_img</span> <span class="o">=</span> <span class="n">raw_img</span><span class="o">*</span><span class="mf">2.0</span> <span class="o">-</span> <span class="mf">1.0</span>
+
+        <span class="n">raw_img</span> <span class="o">=</span> <span class="n">raw_img</span> <span class="o">*</span> <span class="o">-</span><span class="mf">1.0</span>
+
+        <span class="c1"># make the mean to be zero</span>
+        <span class="n">raw_img</span> <span class="o">=</span> <span class="n">raw_img</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">raw_img</span><span class="p">)</span>
+        <span class="c1"># make the standard deviation to be 1</span>
+        <span class="n">raw_img</span> <span class="o">=</span> <span class="n">raw_img</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">raw_img</span><span class="p">)</span>
+        <span class="c1"># make the standard deviation to be the desired RMS</span>
+        <span class="n">raw_img</span> <span class="o">=</span> <span class="n">raw_img</span> <span class="o">*</span> <span class="n">rms</span>
+
+        <span class="c1">#raw_img = (raw_img + 1.0) * 0.5</span>
+        <span class="c1">#raw_img = raw_img - np.min(raw_img)</span>
+        <span class="c1">#raw_img = raw_img/np.max(raw_img)</span>
+        <span class="c1">#raw_img = raw_img*2.0 - 1.0</span>
+
+        <span class="n">normalized_images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">raw_img</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">normalized_images</span></div>
+
+
+<span class="c1">###############################################3</span>
+
+
+<div class="viewcode-block" id="save_df"><a class="viewcode-back" href="../../reference/index.html#framework.stimulus.save_df">[docs]</a><span class="k">def</span> <span class="nf">save_df</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">fname</span><span class="o">=</span><span class="s1">&#39;data.xlsx&#39;</span><span class="p">,</span><span class="n">dname</span><span class="o">=</span><span class="s1">&#39;report&#39;</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">dname</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">fname</span>
+    <span class="nb">print</span> <span class="s1">&#39;Saving:&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span>
+    <span class="c1">#df.to_msgpack(path_or_buf=filename) # doesn&#39;t work in all cases</span>
+    <span class="c1">#df.to_pickle(path=filename,compression=None,protocol=0)</span>
+    <span class="c1">#df.to_pickle(path=filename,compression=&#39;gzip&#39;,protocol=0)</span>
+    <span class="k">if</span> <span class="n">fname</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]</span> <span class="o">==</span> <span class="s1">&#39;csv&#39;</span><span class="p">:</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="s1">&#39;done.&#39;</span></div>
+    
+<div class="viewcode-block" id="load_df"><a class="viewcode-back" href="../../reference/index.html#framework.stimulus.load_df">[docs]</a><span class="k">def</span> <span class="nf">load_df</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="s1">&#39;data.xlsx&#39;</span><span class="p">,</span><span class="n">dname</span><span class="o">=</span><span class="s1">&#39;report&#39;</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">dname</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">fname</span>
+    <span class="nb">print</span> <span class="s1">&#39;Loading:&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;...&#39;</span><span class="p">,</span>
+    <span class="c1">#df = pd.read_msgpack(path_or_buf=filename) # doen&#39;t work in all cases</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1">#df = pd.read_pickle(path=filename,compression=None)</span>
+        <span class="c1">#df = pd.read_pickle(path=filename,compression=&#39;gzip&#39;)</span>
+        <span class="k">if</span> <span class="n">fname</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]</span> <span class="o">==</span> <span class="s1">&#39;csv&#39;</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="nb">print</span> <span class="s1">&#39;done.&#39;</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="nb">print</span> <span class="s1">&#39;not found.&#39;</span>
+    <span class="k">return</span> <span class="n">df</span></div>
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Framework 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Antonio M. Rodriguez and Richard H. Granger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,169 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>framework.experiments.pelli.pelli &#8212; Framework 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">Framework 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for framework.experiments.pelli.pelli</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">=========================================================</span>
+<span class="sd">Experiment:Pelli</span>
+<span class="sd">=========================================================</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">framework.framework</span> <span class="k">import</span> <span class="n">main</span>
+<span class="kn">from</span> <span class="nn">framework.library</span> <span class="k">import</span> <span class="n">get_image_width_in_pixels</span>
+<span class="kn">from</span> <span class="nn">framework.stimulus</span> <span class="k">import</span> <span class="n">save_df</span><span class="p">,</span> <span class="n">save_image</span><span class="p">,</span> <span class="n">load_images</span>
+
+
+<div class="viewcode-block" id="flatten"><a class="viewcode-back" href="../../../../reference/index.html#framework.experiments.pelli.pelli.flatten">[docs]</a><span class="k">def</span> <span class="nf">flatten</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">el</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Iterable</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">el</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="n">flatten</span><span class="p">(</span><span class="n">el</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="n">sub</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">el</span></div>
+
+<div class="viewcode-block" id="build_stimulus"><a class="viewcode-back" href="../../../../reference/index.html#framework.experiments.pelli.pelli.build_stimulus">[docs]</a><span class="k">def</span> <span class="nf">build_stimulus</span><span class="p">(</span><span class="n">unit_images</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span><span class="n">combinations</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span><span class="n">image_height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span><span class="n">image_width</span> <span class="o">=</span> <span class="mi">600</span><span class="p">):</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">image_height</span><span class="p">,</span><span class="n">image_width</span><span class="p">))</span>
+    <span class="n">center_x</span><span class="p">,</span><span class="n">center_y</span> <span class="o">=</span> <span class="n">image_height</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">image_width</span><span class="o">/</span><span class="mi">2</span>
+
+    <span class="n">subimage</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">unit_images</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">])</span><span class="o">/</span><span class="mf">255.0</span>
+
+    <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">center_x</span><span class="o">-</span><span class="n">subimage</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">center_y</span><span class="o">-</span><span class="n">subimage</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span>
+    <span class="n">image</span><span class="p">[</span><span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">+</span><span class="n">subimage</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">y</span><span class="p">:</span><span class="n">y</span><span class="o">+</span><span class="n">subimage</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">subimage</span>
+    <span class="k">return</span> <span class="n">image</span></div>
+
+<div class="viewcode-block" id="build_experiment"><a class="viewcode-back" href="../../../../reference/index.html#framework.experiments.pelli.pelli.build_experiment">[docs]</a><span class="k">def</span> <span class="nf">build_experiment</span><span class="p">(</span><span class="n">experiment_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="n">displayname</span><span class="o">=</span><span class="s1">&#39;Default&#39;</span><span class="p">,</span><span class="n">image_height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span><span class="n">image_width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span><span class="n">viewing_distance</span><span class="o">=</span><span class="mf">12.0</span><span class="p">,</span><span class="n">screen_pixel_size</span><span class="o">=</span><span class="mf">0.282</span><span class="p">,</span><span class="n">offset_max</span><span class="o">=</span><span class="mi">850</span><span class="p">,</span><span class="n">offset_nsteps</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span><span class="n">build_stimulus_func</span><span class="o">=</span><span class="n">build_stimulus</span><span class="p">,</span><span class="n">flank_distances</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="o">**</span><span class="n">params</span><span class="p">):</span>
+    <span class="n">offsets</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;offsets&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">displayname</span> <span class="o">==</span> <span class="s1">&#39;generated&#39;</span><span class="p">:</span>
+        <span class="n">stims</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Generated&#39;</span><span class="p">:</span> <span class="p">([</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">],[</span><span class="s1">&#39;blank&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">],[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)])}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">stims</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;SmallLetters&#39;</span><span class="p">:</span> <span class="p">([</span><span class="s1">&#39;stim-02-item-04.png&#39;</span><span class="p">,</span><span class="s1">&#39;stim-02-item-01.png&#39;</span><span class="p">,</span><span class="s1">&#39;stim-02-item-02.png&#39;</span><span class="p">,</span><span class="s1">&#39;stim-02-item-03.png&#39;</span><span class="p">],[</span><span class="s1">&#39;blank&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">],[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]),</span>
+                 <span class="s1">&#39;LargeLetters&#39;</span><span class="p">:</span> <span class="p">([</span><span class="s1">&#39;stim-03-item-04.png&#39;</span><span class="p">,</span><span class="s1">&#39;stim-03-item-01.png&#39;</span><span class="p">,</span><span class="s1">&#39;stim-03-item-02.png&#39;</span><span class="p">,</span><span class="s1">&#39;stim-03-item-03.png&#39;</span><span class="p">],[</span><span class="s1">&#39;blank&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">],[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])}</span>
+
+    <span class="n">trials</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span><span class="n">details</span> <span class="ow">in</span> <span class="n">stims</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">fnames</span><span class="p">,</span><span class="n">conditions</span><span class="p">,</span><span class="n">combinations</span> <span class="o">=</span> <span class="n">details</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">fnames</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="n">unit_images</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">fnames</span><span class="p">:</span>
+                <span class="n">unit_images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_test_image</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="n">freq</span><span class="p">,</span><span class="n">field_height</span><span class="o">=</span><span class="n">image_height</span><span class="p">,</span><span class="n">field_width</span><span class="o">=</span><span class="n">image_width</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">unit_images</span> <span class="o">=</span> <span class="n">load_images</span><span class="p">(</span><span class="n">dname</span><span class="o">=</span><span class="s1">&#39;images/&#39;</span><span class="p">,</span><span class="n">fnames</span> <span class="o">=</span> <span class="n">fnames</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span><span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">stim_i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">image_combination</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">flank_distance</span> <span class="ow">in</span> <span class="n">flank_distances</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">flank_distance</span> <span class="o">&gt;=</span> <span class="mf">0.0</span><span class="p">:</span>
+                    <span class="n">blank_width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">get_image_width_in_pixels</span><span class="p">(</span><span class="n">degrees</span><span class="o">=</span><span class="n">flank_distance</span><span class="p">,</span><span class="n">viewing_distance</span><span class="o">=</span><span class="n">viewing_distance</span><span class="p">,</span><span class="n">screen_pixel_size</span><span class="o">=</span><span class="n">screen_pixel_size</span><span class="p">))</span>
+                    <span class="n">combination</span> <span class="o">=</span> <span class="n">image_combination</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">blank_width</span> <span class="o">=</span> <span class="n">unit_images</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">list_combination</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">image_combination</span><span class="p">)</span>
+                    <span class="n">list_combination</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">list_combination</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">combination</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">list_combination</span><span class="p">)</span>
+                <span class="n">blank_height</span> <span class="o">=</span> <span class="n">unit_images</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">blank_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">blank_height</span><span class="p">,</span><span class="n">blank_width</span><span class="p">))</span><span class="o">*</span><span class="mi">255</span>
+                <span class="n">image</span> <span class="o">=</span> <span class="n">build_stimulus</span><span class="p">(</span><span class="n">unit_images</span><span class="o">=</span><span class="p">[</span><span class="n">blank_image</span><span class="p">]</span><span class="o">+</span><span class="n">unit_images</span><span class="p">,</span><span class="n">combinations</span><span class="o">=</span><span class="n">combination</span><span class="p">,</span><span class="n">image_height</span><span class="o">=</span><span class="n">image_height</span><span class="p">,</span><span class="n">image_width</span><span class="o">=</span><span class="n">image_width</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">name</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="s1">&#39;</span><span class="si">{:02d}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stim_i</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">flank_distance</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.png&#39;</span>
+                <span class="n">save_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">fname</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span><span class="n">unnormalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">offset</span> <span class="ow">in</span> <span class="n">offsets</span><span class="p">:</span>
+                    <span class="n">cond</span> <span class="o">=</span> <span class="p">[</span><span class="n">conditions</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">combination</span><span class="p">]</span>
+                    <span class="n">trial</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">flatten</span><span class="p">([</span><span class="n">name</span><span class="p">,</span><span class="n">offset</span><span class="p">,</span><span class="n">cond</span><span class="p">,</span><span class="n">flank_distance</span><span class="p">,</span><span class="n">stim_i</span><span class="p">,</span><span class="n">viewing_distance</span><span class="p">,</span><span class="n">screen_pixel_size</span><span class="p">,</span><span class="n">image_height</span><span class="p">,</span><span class="n">image_width</span><span class="p">,</span><span class="n">filename</span><span class="p">]))</span>
+
+                    <span class="n">trials</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trial</span><span class="p">)</span>
+            <span class="n">stim_i</span> <span class="o">=</span> <span class="n">stim_i</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="s1">&#39;offset&#39;</span><span class="p">,</span><span class="s1">&#39;left&#39;</span><span class="p">,</span><span class="s1">&#39;blank&#39;</span><span class="p">,</span><span class="s1">&#39;middle&#39;</span><span class="p">,</span><span class="s1">&#39;blank&#39;</span><span class="p">,</span><span class="s1">&#39;right&#39;</span><span class="p">,</span><span class="s1">&#39;flank_distance&#39;</span><span class="p">,</span><span class="s1">&#39;condition&#39;</span><span class="p">,</span><span class="s1">&#39;viewing_distance&#39;</span><span class="p">,</span><span class="s1">&#39;screen_pixel_size&#39;</span><span class="p">,</span><span class="s1">&#39;image_height&#39;</span><span class="p">,</span><span class="s1">&#39;image_width&#39;</span><span class="p">,</span><span class="s1">&#39;image&#39;</span><span class="p">]</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">trials</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">object</span><span class="p">),</span><span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+    <span class="n">save_df</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="s1">&#39;conditions.xlsx&#39;</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span></div>
+
+<span class="c1"># mark functions to profile with @profile</span>
+<span class="c1"># profile with: kernprof -l -v framework.py</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">(</span><span class="n">build_stimulus_func</span><span class="o">=</span><span class="n">build_stimulus</span><span class="p">,</span><span class="n">build_experiment_func</span><span class="o">=</span><span class="n">build_experiment</span><span class="p">)</span>
+    
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">Framework 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Antonio M. Rodriguez and Richard H. Granger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.
+    </div>
+  </body>
+</html>

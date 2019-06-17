@@ -1,0 +1,503 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Contrast API Reference &#8212; Framework 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Overview" href="../overview.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../overview.html" title="Overview"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Framework 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="contrast-api-reference">
+<h1>Contrast API Reference<a class="headerlink" href="#contrast-api-reference" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<span class="target" id="module-framework"></span><span class="target" id="module-framework.framework"></span><div class="section" id="id1">
+<h2>Module: Framework<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Contains functions for building and running an experiment
+with parameters defined in the experiment.cfg file.</p>
+<dl class="function">
+<dt id="framework.framework.build_experiment">
+<code class="descclassname">framework.framework.</code><code class="descname">build_experiment</code><span class="sig-paren">(</span><em>experiment_name=''</em>, <em>build_stimulus_func=None</em>, <em>model_params=[]</em>, <em>experiment_params=[]</em>, <em>stimulus_params=[]</em>, <em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/framework.html#build_experiment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.framework.build_experiment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.framework.build_operators">
+<code class="descclassname">framework.framework.</code><code class="descname">build_operators</code><span class="sig-paren">(</span><em>offsets</em>, <em>viewing_distance=22.0</em>, <em>screen_pixel_size=0.282</em>, <em>field_height=100</em>, <em>field_width=100</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/framework.html#build_operators"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.framework.build_operators" title="Permalink to this definition">¶</a></dt>
+<dd><p>NOTE: Ji and Javg as filters should each sum to one</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="framework.framework.format_as_str">
+<code class="descclassname">framework.framework.</code><code class="descname">format_as_str</code><span class="sig-paren">(</span><em>value</em>, <em>fmt='{:02}'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/framework.html#format_as_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.framework.format_as_str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.framework.get_op">
+<code class="descclassname">framework.framework.</code><code class="descname">get_op</code><span class="sig-paren">(</span><em>sigma=0.01</em>, <em>K=1.0</em>, <em>field_height=100</em>, <em>field_width=100</em>, <em>pixel_offset=0</em>, <em>viewing_distance=12.0</em>, <em>screen_pixel_size=0.282</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/framework.html#get_op"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.framework.get_op" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.framework.get_params">
+<code class="descclassname">framework.framework.</code><code class="descname">get_params</code><span class="sig-paren">(</span><em>process_params_func=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/framework.html#get_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.framework.get_params" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.framework.main">
+<code class="descclassname">framework.framework.</code><code class="descname">main</code><span class="sig-paren">(</span><em>build_stimulus_func</em>, <em>plot_func=&lt;function plot_main_result&gt;</em>, <em>process_params_func=None</em>, <em>build_experiment_func=&lt;function build_experiment&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/framework.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.framework.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.framework.plot_main_result">
+<code class="descclassname">framework.framework.</code><code class="descname">plot_main_result</code><span class="sig-paren">(</span><em>result_df=None</em>, <em>experiment_name='pelli'</em>, <em>subject='model'</em>, <em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/framework.html#plot_main_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.framework.plot_main_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.framework.plot_result">
+<code class="descclassname">framework.framework.</code><code class="descname">plot_result</code><span class="sig-paren">(</span><em>experiment_name=''</em>, <em>plot_func=None</em>, <em>subject='model'</em>, <em>only_most_recent=True</em>, <em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/framework.html#plot_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.framework.plot_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.framework.process">
+<code class="descclassname">framework.framework.</code><code class="descname">process</code><span class="sig-paren">(</span><em>data=None, pixel_offset=0, dataname=['Default'], operator=None, sigma=0.0012, k=4.6, image_height=100, image_width=100, experiment_name='', image_fname='', **config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/framework.html#process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.framework.process" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.framework.run_experiment">
+<code class="descclassname">framework.framework.</code><code class="descname">run_experiment</code><span class="sig-paren">(</span><em>build_stimulus_func=None</em>, <em>experiment_name='experiment_name'</em>, <em>config_fname='config.cfg'</em>, <em>params_changed=True</em>, <em>build_experiment_func=&lt;function build_experiment&gt;</em>, <em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/framework.html#run_experiment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.framework.run_experiment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<span class="target" id="module-framework.library"></span><div class="section" id="framework-library">
+<h2>Framework Library<a class="headerlink" href="#framework-library" title="Permalink to this headline">¶</a></h2>
+<p>Contains functions that are independent of any specific experiment.</p>
+<dl class="function">
+<dt id="framework.library.get_correct_coords">
+<code class="descclassname">framework.library.</code><code class="descname">get_correct_coords</code><span class="sig-paren">(</span><em>start_x=0</em>, <em>viewing_distance=12.0</em>, <em>field_height=10</em>, <em>field_width=10</em>, <em>pixel_width=0.282</em>, <em>pixel_height=0.282</em>, <em>**config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/library.html#get_correct_coords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.library.get_correct_coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the coords in terms of degree of visual angle
+converts Euclidean to Polar coordinates based on a fixation point, viewing distance, and a window size
+polar coordinate conversion:</p>
+<blockquote>
+<div><ul class="simple">
+<li>r = np.sqrt(np.square(x) + np.square(y))</li>
+<li>th = np.arctan2(y,x)</li>
+</ul>
+</div></blockquote>
+<p>log-polar coordinate conversion based on degrees of visual angle from fixation:</p>
+<blockquote>
+<div><ul class="simple">
+<li>r = np.rad2deg(np.arctan2(np.sqrt(np.square(x) + np.square(y)),viewing_distance*25.4))</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="framework.library.get_degrees_at_pixels">
+<code class="descclassname">framework.library.</code><code class="descname">get_degrees_at_pixels</code><span class="sig-paren">(</span><em>pixels=10</em>, <em>viewing_distance=24.0</em>, <em>screen_pixel_size=0.282</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/library.html#get_degrees_at_pixels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.library.get_degrees_at_pixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>pixels - if fovea is centered on an image, pixels is half the image width in pixels
+returns - half the viewing_angle</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="framework.library.get_image_width_in_degrees">
+<code class="descclassname">framework.library.</code><code class="descname">get_image_width_in_degrees</code><span class="sig-paren">(</span><em>image_width=100</em>, <em>viewing_distance=24.0</em>, <em>screen_pixel_size=0.282</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/library.html#get_image_width_in_degrees"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.library.get_image_width_in_degrees" title="Permalink to this definition">¶</a></dt>
+<dd><p>image_width is size of entire in pixels
+returns: degrees to span the entire image</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="framework.library.get_image_width_in_pixels">
+<code class="descclassname">framework.library.</code><code class="descname">get_image_width_in_pixels</code><span class="sig-paren">(</span><em>degrees=1.0</em>, <em>viewing_distance=24.0</em>, <em>screen_pixel_size=0.282</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/library.html#get_image_width_in_pixels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.library.get_image_width_in_pixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>degrees is viewing angle of the entire image
+returns: num of pixels that span the entire image</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="framework.library.get_pixels_at_degrees">
+<code class="descclassname">framework.library.</code><code class="descname">get_pixels_at_degrees</code><span class="sig-paren">(</span><em>degrees=1.0</em>, <em>viewing_distance=24.0</em>, <em>screen_pixel_size=0.282</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/library.html#get_pixels_at_degrees"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.library.get_pixels_at_degrees" title="Permalink to this definition">¶</a></dt>
+<dd><p>degrees - if fovea is centered on an image, degrees is half the viewing angle
+returns: pixels - if fovea is centered on an image, pixels is half the image width in pixels</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="framework.library.get_sigma_map">
+<code class="descclassname">framework.library.</code><code class="descname">get_sigma_map</code><span class="sig-paren">(</span><em>start_x=0</em>, <em>field_height=100</em>, <em>field_width=100</em>, <em>viewing_distance=12.0</em>, <em>screen_pixel_size=0.282</em>, <em>debug=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/library.html#get_sigma_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.library.get_sigma_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>For each point on the image (image_height x image_width) returns the sigma associated
+with each point due to the offset from the fovea of the image.  The average of all the sigmas
+may be used as an approximation to the full set of all sigmas.  Each sigma is used as the basis
+for creating the J operator which is the weighting of all the pixels given one pixel as a focal point.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>start_x</strong> – is in degrees of visual angle</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">an entire field_height x field_width array of sigma values</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="framework.library.get_viewing_distance_to_span_image">
+<code class="descclassname">framework.library.</code><code class="descname">get_viewing_distance_to_span_image</code><span class="sig-paren">(</span><em>image_width=20</em>, <em>degree_span=1.0</em>, <em>screen_pixel_size=0.282</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/library.html#get_viewing_distance_to_span_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.library.get_viewing_distance_to_span_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>degrees is viewing angle of the entire image
+image_width is size of entire in pixels</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="framework.library.normalize">
+<code class="descclassname">framework.library.</code><code class="descname">normalize</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/library.html#normalize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.library.normalize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.library.set_at">
+<code class="descclassname">framework.library.</code><code class="descname">set_at</code><span class="sig-paren">(</span><em>image=None</em>, <em>unit=None</em>, <em>x=0</em>, <em>y=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/library.html#set_at"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.library.set_at" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the value of a pixel on image.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="framework.library.sorted_ls">
+<code class="descclassname">framework.library.</code><code class="descname">sorted_ls</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/library.html#sorted_ls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.library.sorted_ls" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<span class="target" id="module-framework.stimulus"></span><div class="section" id="stimulus-library">
+<h2>Stimulus Library<a class="headerlink" href="#stimulus-library" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="framework.stimulus.get_combined_image">
+<code class="descclassname">framework.stimulus.</code><code class="descname">get_combined_image</code><span class="sig-paren">(</span><em>unit_images_list=None</em>, <em>combinations=(1</em>, <em>2</em>, <em>1)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/stimulus.html#get_combined_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.stimulus.get_combined_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.stimulus.get_combined_images">
+<code class="descclassname">framework.stimulus.</code><code class="descname">get_combined_images</code><span class="sig-paren">(</span><em>unit_images_list=None, combinations=[(1, 2, 1), (1, 1, 1), (0, 2, 1), (0, 1, 1)]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/stimulus.html#get_combined_images"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.stimulus.get_combined_images" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.stimulus.load_df">
+<code class="descclassname">framework.stimulus.</code><code class="descname">load_df</code><span class="sig-paren">(</span><em>fname='data.xlsx'</em>, <em>dname='report'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/stimulus.html#load_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.stimulus.load_df" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.stimulus.load_image">
+<code class="descclassname">framework.stimulus.</code><code class="descname">load_image</code><span class="sig-paren">(</span><em>dname='images/'</em>, <em>fname='stim-01-item-01.png'</em>, <em>normalize=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/stimulus.html#load_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.stimulus.load_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.stimulus.load_images">
+<code class="descclassname">framework.stimulus.</code><code class="descname">load_images</code><span class="sig-paren">(</span><em>dname='images/', fnames=['stim-01-item-03.png', 'stim-01-item-01.png', 'stim-01-item-02.png'], normalize=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/stimulus.html#load_images"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.stimulus.load_images" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.stimulus.normalize_images">
+<code class="descclassname">framework.stimulus.</code><code class="descname">normalize_images</code><span class="sig-paren">(</span><em>images</em>, <em>rms=0.8</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/stimulus.html#normalize_images"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.stimulus.normalize_images" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.stimulus.save_df">
+<code class="descclassname">framework.stimulus.</code><code class="descname">save_df</code><span class="sig-paren">(</span><em>df</em>, <em>fname='data.xlsx'</em>, <em>dname='report'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/stimulus.html#save_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.stimulus.save_df" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.stimulus.save_image">
+<code class="descclassname">framework.stimulus.</code><code class="descname">save_image</code><span class="sig-paren">(</span><em>image</em>, <em>dname='images/'</em>, <em>fname='stim-01-item-01.png'</em>, <em>unnormalize=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/stimulus.html#save_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.stimulus.save_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<span class="target" id="module-framework.plotting"></span><div class="section" id="plotting-library">
+<h2>Plotting Library<a class="headerlink" href="#plotting-library" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="framework.plotting.plot_figure">
+<code class="descclassname">framework.plotting.</code><code class="descname">plot_figure</code><span class="sig-paren">(</span><em>figure</em>, <em>name='Default'</em>, <em>caption='Default caption.'</em>, <em>experiment_name=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/plotting.html#plot_figure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.plotting.plot_figure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves a figure.</p>
+</dd></dl>
+
+</div>
+<span class="target" id="module-framework.experiments.library"></span><div class="section" id="experiments-library">
+<h2>Experiments Library<a class="headerlink" href="#experiments-library" title="Permalink to this headline">¶</a></h2>
+<p>Contains functions that are used by all specific experiments.</p>
+<dl class="function">
+<dt id="framework.experiments.library.compute_response">
+<code class="descclassname">framework.experiments.library.</code><code class="descname">compute_response</code><span class="sig-paren">(</span><em>df1</em>, <em>compute_error=False</em>, <em>est_max=-1.0</em>, <em>sigma_t=5.0</em>, <em>upper_limit=0.85</em>, <em>lower_limit=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/experiments/library.html#compute_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.experiments.library.compute_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns df,mean_target,sigma_target,K</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>df1</strong> – the dataframe used to compute responses, see note 1 below</li>
+<li><strong>compute_error</strong> – if True, responses will be 1-response</li>
+<li><strong>est_max</strong> – method used to estimate the maximum background sigma</li>
+<li><strong>sigma_t</strong> – divisor for sigma_t <img class="math" src="../_images/math/8849b923bfb48d6c823c34e5e58e1d29a74ea35b.svg" alt="\sigma_{t+d} = \frac{est_max-\mu_t}{\sigma_t}"/></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">df,mean_target,sigma_target,K</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>1: where df1 is of the form:</p>
+<div class="last highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># where df1 is of the form:</span>
+<span class="n">offset</span>                <span class="mi">5</span>         <span class="mi">10</span>        <span class="mi">15</span>        <span class="mi">20</span>
+<span class="n">flank_distance</span>                                        
+ <span class="o">-</span><span class="mf">1.00</span>           <span class="mf">0.009318</span>  <span class="mf">0.010185</span>  <span class="mf">0.011334</span>  <span class="mf">0.012599</span>
+  <span class="mf">0.05</span>           <span class="mf">0.010523</span>  <span class="mf">0.009813</span>  <span class="mf">0.010544</span>  <span class="mf">0.012038</span>
+  <span class="mf">0.10</span>           <span class="mf">0.013262</span>  <span class="mf">0.012097</span>  <span class="mf">0.011458</span>  <span class="mf">0.011655</span>
+  <span class="mf">0.15</span>           <span class="mf">0.013903</span>  <span class="mf">0.013449</span>  <span class="mf">0.013085</span>  <span class="mf">0.012946</span>
+  <span class="mf">0.20</span>           <span class="mf">0.013882</span>  <span class="mf">0.013690</span>  <span class="mf">0.013561</span>  <span class="mf">0.013528</span>
+  <span class="mf">0.30</span>           <span class="mf">0.013623</span>  <span class="mf">0.013646</span>  <span class="mf">0.014068</span>  <span class="mf">0.014614</span>
+  <span class="mf">0.40</span>           <span class="mf">0.013587</span>  <span class="mf">0.013523</span>  <span class="mf">0.013959</span>  <span class="mf">0.014692</span>
+  <span class="mf">0.60</span>           <span class="mf">0.013583</span>  <span class="mf">0.013481</span>  <span class="mf">0.013832</span>  <span class="mf">0.014533</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="framework.experiments.library.decision_func">
+<code class="descclassname">framework.experiments.library.</code><code class="descname">decision_func</code><span class="sig-paren">(</span><em>df</em>, <em>target_contrast=0.027</em>, <em>sigma=0.05</em>, <em>K=5.0</em>, <em>upper_limit=0.85</em>, <em>lower_limit=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/experiments/library.html#decision_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.experiments.library.decision_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the result of applying the descision function to all the contrast values in the dataframe df.</p>
+<p>The decision function computes the difference of gaussians applied to the contrast values in df as follows:</p>
+<p>decision = <img class="math" src="../_images/math/0a5c6897b73b980c790a8311b4af1dc3f291a622.svg" alt="e^{ - { ( \frac{\text{df} - \text{target\_contrast}}{ 2 { \sigma_t }^2  } ) }^2 } - e^{ - { ( \frac{\text{df} - \text{target\_contrast}}{ 2 { K^2 \sigma_t }^2  } ) }^2 }  + 1"/></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>df</strong> – the contast values for the experiment as a dataframe</li>
+<li><strong>target_contrast</strong> – the contrast value for the target-alone condition</li>
+<li><strong>sigma</strong> – the std. dev. of the target-alone contrast <img class="math" src="../_images/math/558a78c1908a36d1820dbda352c62eb7af77c3d9.svg" alt="\sigma_{t}"/></li>
+<li><strong>K</strong> – mulitplier for target+distractor sigma <img class="math" src="../_images/math/8978de2cd5c8f8c921f70d012b68eefd17688f40.svg" alt="\sigma_{t+d} = K\sigma_t"/></li>
+<li><strong>upper_limit</strong> – upper_limit for the descision function which normally is 1.0</li>
+<li><strong>lower_limit</strong> – lower_limit for the descision function which normally is 0.0</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">result of decision function applied to dataframe df</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="framework.experiments.library.plot_data">
+<code class="descclassname">framework.experiments.library.</code><code class="descname">plot_data</code><span class="sig-paren">(</span><em>df, fname='plot', experiment_name='pelli', exp_name='LargeLetters', title='title', xlabel='xlabel', ylabel='ylabel', plot_min=0, plot_max=100, index_marker_shape=['o', 'v'], columns_marker_color=['m', 'g'], columns_title='Column_title', linestyle='--', scale_plot=True, show_target_as_dash=True, x_scale_factor=1.0, x_scale_addition=0.0, **params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/experiments/library.html#plot_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.experiments.library.plot_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.experiments.library.plot_data_as_barplot">
+<code class="descclassname">framework.experiments.library.</code><code class="descname">plot_data_as_barplot</code><span class="sig-paren">(</span><em>df</em>, <em>fname='plot'</em>, <em>experiment_name='pelli'</em>, <em>exp_name='LargeLetters'</em>, <em>title='title'</em>, <em>xlabel='xlabel'</em>, <em>ylabel='ylabel'</em>, <em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/experiments/library.html#plot_data_as_barplot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.experiments.library.plot_data_as_barplot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.experiments.library.plot_decision_func">
+<code class="descclassname">framework.experiments.library.</code><code class="descname">plot_decision_func</code><span class="sig-paren">(</span><em>df, df_contrast=None, target_contrast=0.027, sigma=0.05, K=5.0, zoomed=False, fname='plot', experiment_name='pelli', exp_name='LargeLetters', title='title', xlabel='xlabel', ylabel='ylabel', index_marker_shape=['o', 'v'], columns_marker_color=['m', 'g'], columns_title='Column_title', scale_range=[0, 1], upper_limit=0.85, lower_limit=0.0, x_scale_factor=1.0, show_target_as_dash=True, **params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/experiments/library.html#plot_decision_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.experiments.library.plot_decision_func" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<span class="target" id="module-framework.experiments.bex.bex"></span><div class="section" id="experiment-bex">
+<h2>Experiment:Bex<a class="headerlink" href="#experiment-bex" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="framework.experiments.bex.bex.build_stimulus">
+<code class="descclassname">framework.experiments.bex.bex.</code><code class="descname">build_stimulus</code><span class="sig-paren">(</span><em>line_width=0.0</em>, <em>gap_width=0.0</em>, <em>target_diameter=0.0</em>, <em>viewing_distance=22.0</em>, <em>screen_pixel_size=0.282</em>, <em>image_height=400</em>, <em>image_width=400</em>, <em>flank_orientation=0</em>, <em>target_orientation=0</em>, <em>flank_distance=0.1</em>, <em>gap=1</em>, <em>num_flank=1</em>, <em>stimulus_contrast=0.1</em>, <em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/experiments/bex/bex.html#build_stimulus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.experiments.bex.bex.build_stimulus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.experiments.bex.bex.get_landolt_c">
+<code class="descclassname">framework.experiments.bex.bex.</code><code class="descname">get_landolt_c</code><span class="sig-paren">(</span><em>ndim=25</em>, <em>radius=9</em>, <em>thickness=1</em>, <em>angle=0.0</em>, <em>gap=1</em>, <em>gap_thickness=2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/experiments/bex/bex.html#get_landolt_c"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.experiments.bex.bex.get_landolt_c" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.experiments.bex.bex.process_params">
+<code class="descclassname">framework.experiments.bex.bex.</code><code class="descname">process_params</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/experiments/bex/bex.html#process_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.experiments.bex.bex.process_params" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<span class="target" id="module-framework.experiments.herzog.herzog"></span><div class="section" id="experiment-herzog">
+<h2>Experiment:Herzog<a class="headerlink" href="#experiment-herzog" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="framework.experiments.herzog.herzog.build_stimulus">
+<code class="descclassname">framework.experiments.herzog.herzog.</code><code class="descname">build_stimulus</code><span class="sig-paren">(</span><em>image_height=500</em>, <em>image_width=500</em>, <em>target_size=0.1</em>, <em>flank_distance=3.0</em>, <em>viewing_distance=18.0</em>, <em>target_orientation=0</em>, <em>box_flank=0</em>, <em>num_flank=1</em>, <em>screen_pixel_size=0.282</em>, <em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/experiments/herzog/herzog.html#build_stimulus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.experiments.herzog.herzog.build_stimulus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.experiments.herzog.herzog.get_flank_shape">
+<code class="descclassname">framework.experiments.herzog.herzog.</code><code class="descname">get_flank_shape</code><span class="sig-paren">(</span><em>sd=50</em>, <em>box=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/experiments/herzog/herzog.html#get_flank_shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.experiments.herzog.herzog.get_flank_shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.experiments.herzog.herzog.get_flank_shapes">
+<code class="descclassname">framework.experiments.herzog.herzog.</code><code class="descname">get_flank_shapes</code><span class="sig-paren">(</span><em>sigma=30</em>, <em>box_flank=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/experiments/herzog/herzog.html#get_flank_shapes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.experiments.herzog.herzog.get_flank_shapes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.experiments.herzog.herzog.get_line">
+<code class="descclassname">framework.experiments.herzog.herzog.</code><code class="descname">get_line</code><span class="sig-paren">(</span><em>bbox_height=100</em>, <em>bbox_width=100</em>, <em>col=0</em>, <em>row=0</em>, <em>height=40</em>, <em>width=40</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/experiments/herzog/herzog.html#get_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.experiments.herzog.herzog.get_line" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.experiments.herzog.herzog.get_target_shape">
+<code class="descclassname">framework.experiments.herzog.herzog.</code><code class="descname">get_target_shape</code><span class="sig-paren">(</span><em>sd=50</em>, <em>orientation=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/experiments/herzog/herzog.html#get_target_shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.experiments.herzog.herzog.get_target_shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<span class="target" id="module-framework.experiments.kahneman.kahneman"></span><div class="section" id="experiment-kahneman">
+<h2>Experiment:Kahneman<a class="headerlink" href="#experiment-kahneman" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="framework.experiments.kahneman.kahneman.build_stimulus">
+<code class="descclassname">framework.experiments.kahneman.kahneman.</code><code class="descname">build_stimulus</code><span class="sig-paren">(</span><em>image_height=1000</em>, <em>image_width=1000</em>, <em>target_size=0.1</em>, <em>gap_size=0.1</em>, <em>flank_distance=3.0</em>, <em>viewing_distance=18.0</em>, <em>target_orientation=0</em>, <em>screen_pixel_size=0.282</em>, <em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/experiments/kahneman/kahneman.html#build_stimulus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.experiments.kahneman.kahneman.build_stimulus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.experiments.kahneman.kahneman.get_landolt_c">
+<code class="descclassname">framework.experiments.kahneman.kahneman.</code><code class="descname">get_landolt_c</code><span class="sig-paren">(</span><em>ndim=25</em>, <em>radius=9</em>, <em>thickness=1</em>, <em>angle=0.0</em>, <em>gap=1</em>, <em>gap_thickness=2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/experiments/kahneman/kahneman.html#get_landolt_c"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.experiments.kahneman.kahneman.get_landolt_c" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<span class="target" id="module-framework.experiments.pachai.pachai"></span><div class="section" id="experiment-pachai">
+<h2>Experiment:Pachai<a class="headerlink" href="#experiment-pachai" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="framework.experiments.pachai.pachai.build_stimulus">
+<code class="descclassname">framework.experiments.pachai.pachai.</code><code class="descname">build_stimulus</code><span class="sig-paren">(</span><em>line_width=0.0</em>, <em>gap_width=0.0</em>, <em>target_diameter=0.0</em>, <em>viewing_distance=22.0</em>, <em>screen_pixel_size=0.282</em>, <em>image_height=600</em>, <em>image_width=600</em>, <em>flank_orientation=0</em>, <em>target_orientation=0</em>, <em>flank_distance=0.1</em>, <em>gap=1</em>, <em>num_flank=1</em>, <em>stimulus_contrast=0.1</em>, <em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/experiments/pachai/pachai.html#build_stimulus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.experiments.pachai.pachai.build_stimulus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.experiments.pachai.pachai.process_params">
+<code class="descclassname">framework.experiments.pachai.pachai.</code><code class="descname">process_params</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/experiments/pachai/pachai.html#process_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.experiments.pachai.pachai.process_params" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<span class="target" id="module-framework.experiments.pelli.pelli"></span><div class="section" id="experiment-pelli">
+<h2>Experiment:Pelli<a class="headerlink" href="#experiment-pelli" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="framework.experiments.pelli.pelli.build_experiment">
+<code class="descclassname">framework.experiments.pelli.pelli.</code><code class="descname">build_experiment</code><span class="sig-paren">(</span><em>experiment_name='', displayname='Default', image_height=600, image_width=600, viewing_distance=12.0, screen_pixel_size=0.282, offset_max=850, offset_nsteps=40, build_stimulus_func=&lt;function build_stimulus&gt;, flank_distances=[0], **params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/experiments/pelli/pelli.html#build_experiment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.experiments.pelli.pelli.build_experiment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.experiments.pelli.pelli.build_stimulus">
+<code class="descclassname">framework.experiments.pelli.pelli.</code><code class="descname">build_stimulus</code><span class="sig-paren">(</span><em>unit_images=None</em>, <em>combinations=(1</em>, <em>2</em>, <em>1)</em>, <em>image_height=600</em>, <em>image_width=600</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/experiments/pelli/pelli.html#build_stimulus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.experiments.pelli.pelli.build_stimulus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="framework.experiments.pelli.pelli.flatten">
+<code class="descclassname">framework.experiments.pelli.pelli.</code><code class="descname">flatten</code><span class="sig-paren">(</span><em>l</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/framework/experiments/pelli/pelli.html#flatten"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#framework.experiments.pelli.pelli.flatten" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="../genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="../py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="../search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Contrast API Reference</a><ul>
+<li><a class="reference internal" href="#id1">Module: Framework</a></li>
+<li><a class="reference internal" href="#framework-library">Framework Library</a></li>
+<li><a class="reference internal" href="#stimulus-library">Stimulus Library</a></li>
+<li><a class="reference internal" href="#plotting-library">Plotting Library</a></li>
+<li><a class="reference internal" href="#experiments-library">Experiments Library</a></li>
+<li><a class="reference internal" href="#experiment-bex">Experiment:Bex</a></li>
+<li><a class="reference internal" href="#experiment-herzog">Experiment:Herzog</a></li>
+<li><a class="reference internal" href="#experiment-kahneman">Experiment:Kahneman</a></li>
+<li><a class="reference internal" href="#experiment-pachai">Experiment:Pachai</a></li>
+<li><a class="reference internal" href="#experiment-pelli">Experiment:Pelli</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../overview.html"
+                        title="previous chapter">Overview</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../overview.html" title="Overview"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Framework 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Antonio M. Rodriguez and Richard H. Granger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.
+    </div>
+  </body>
+</html>

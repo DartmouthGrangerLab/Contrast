@@ -1,0 +1,21 @@
+#!/bin/bash
+
+cd bex
+./bex.py report
+cd ..
+
+cd herzog
+./herzog.py report
+cd ..
+
+cd kahneman
+./kahneman.py report
+cd ..
+
+cd pachai
+./pachai.py report
+cd ..
+
+cd pelli
+./pelli.py report
+cd ..
