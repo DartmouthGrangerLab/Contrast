@@ -1,0 +1,383 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Contrast.model.model &#8212; Contrast 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Contrast 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for Contrast.model.model</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">=========================================================</span>
+<span class="sd">Module: Model</span>
+<span class="sd">=========================================================</span>
+
+<span class="sd">Class for building Jacobian operators and processing an image.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">past.builtins</span> <span class="k">import</span> <span class="n">basestring</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">object</span>
+
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">getopt</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">glob</span><span class="o">,</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy.fftpack</span> <span class="k">import</span> <span class="n">fft2</span><span class="p">,</span> <span class="n">ifft2</span><span class="p">,</span> <span class="n">ifftshift</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="k">import</span> <span class="n">cdist</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">norm</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="k">import</span> <span class="n">curve_fit</span>
+
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">PIL</span> <span class="k">import</span> <span class="n">Image</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">Image</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">cm</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">300</span>
+
+<span class="kn">from</span> <span class="nn">Contrast.model.library</span> <span class="k">import</span> <span class="n">get_pixels_at_degrees</span><span class="p">,</span> <span class="n">get_sigma_map</span><span class="p">,</span> <span class="n">sorted_ls</span><span class="p">,</span> <span class="n">normalize</span><span class="p">,</span> <span class="n">get_correct_coords</span>
+<span class="kn">from</span> <span class="nn">Contrast.model.stimulus</span> <span class="k">import</span> <span class="n">save_image</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">chained_assignment</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="c1">#print(__doc__)</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">#matplotlib.use(&quot;Agg&quot;)</span>
+
+<span class="c1">#########################################</span>
+
+<div class="viewcode-block" id="decision_func"><a class="viewcode-back" href="../../../reference/index.html#Contrast.model.model.decision_func">[docs]</a><span class="k">def</span> <span class="nf">decision_func</span><span class="p">(</span><span class="n">contrast</span><span class="p">,</span><span class="n">target_contrast</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">decision_sigma</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">decision_K</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">upper_limit</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">lower_limit</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">return_all</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">J_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">contrast</span><span class="o">-</span><span class="n">target_contrast</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">decision_sigma</span><span class="p">))))</span>
+    <span class="n">J_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">contrast</span><span class="o">-</span><span class="n">target_contrast</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">decision_sigma</span><span class="o">*</span><span class="n">decision_K</span><span class="p">))))</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="n">J_f</span><span class="o">-</span><span class="n">J_b</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">upper_limit</span><span class="o">-</span><span class="n">lower_limit</span><span class="p">)</span><span class="o">+</span><span class="n">lower_limit</span>
+    <span class="k">if</span> <span class="n">return_all</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">,</span><span class="n">J_f</span><span class="p">,</span><span class="n">J_b</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="Model"><a class="viewcode-back" href="../../../reference/index.html#Contrast.model.model.Model">[docs]</a><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Documentation for model</span>
+
+<span class="sd">    More documentation</span>
+
+<span class="sd">    :Parameters:</span>
+<span class="sd">        visible : **True** or False</span>
+<span class="sd">            documentation on parameter</span>
+<span class="sd">        newPos : **None** or [x,y]</span>
+<span class="sd">            documentation on parameter</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">eccentricities</span><span class="o">=</span><span class="p">[</span><span class="mf">3.88</span><span class="p">],</span>
+                 <span class="n">viewing_distance</span><span class="o">=</span><span class="mf">29.5</span><span class="p">,</span>
+                 <span class="n">screen_pixel_size</span><span class="o">=</span><span class="mf">0.282</span><span class="p">,</span>
+                 <span class="n">view_size</span><span class="o">=</span><span class="p">(</span><span class="mi">350</span><span class="p">,</span><span class="mi">350</span><span class="p">),</span>
+                 <span class="n">view_pos</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> 
+                 <span class="n">target_contrast</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+                 <span class="n">est_max</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+                 <span class="n">K</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span>
+                 <span class="n">upper_limit</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span>
+                 <span class="n">lower_limit</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+                 <span class="n">saveimages</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">cwd</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+                 <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                 <span class="n">logging</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="o">**</span><span class="n">params</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Model</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logging</span> <span class="o">=</span> <span class="n">logging</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_pos</span> <span class="o">=</span> <span class="n">view_pos</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_size</span> <span class="o">=</span> <span class="n">view_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eccentricity</span> <span class="o">=</span> <span class="n">eccentricities</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eccentricities</span> <span class="o">=</span> <span class="n">eccentricities</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_contrast</span> <span class="o">=</span> <span class="n">target_contrast</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">est_max</span> <span class="o">=</span> <span class="n">est_max</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">K</span> <span class="o">=</span> <span class="n">K</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upper_limit</span> <span class="o">=</span> <span class="n">upper_limit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lower_limit</span> <span class="o">=</span> <span class="n">lower_limit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saveimages</span> <span class="o">=</span> <span class="n">saveimages</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cwd</span> <span class="o">=</span> <span class="n">cwd</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">operators</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_operators</span><span class="p">(</span><span class="n">eccentricities</span><span class="o">=</span><span class="n">eccentricities</span><span class="p">,</span><span class="n">viewing_distance</span><span class="o">=</span><span class="n">viewing_distance</span><span class="p">,</span><span class="n">screen_pixel_size</span><span class="o">=</span><span class="n">screen_pixel_size</span><span class="p">,</span><span class="n">field_height</span><span class="o">=</span><span class="n">view_size</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">field_width</span><span class="o">=</span><span class="n">view_size</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">decision_sigma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">decision_K</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_decision_params</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Model.get_decision_params"><a class="viewcode-back" href="../../../reference/index.html#Contrast.model.model.Model.get_decision_params">[docs]</a>    <span class="k">def</span> <span class="nf">get_decision_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sigma_target</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="mf">1.1</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">target_contrast</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">target_contrast</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)))</span>       
+        <span class="n">sigma_target_and_distractor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">est_max</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">target_contrast</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)))</span>  <span class="c1"># 0.045 matches previous K</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="n">sigma_target_and_distractor</span><span class="o">/</span><span class="n">sigma_target</span>
+        <span class="k">return</span> <span class="n">sigma_target</span><span class="p">,</span><span class="n">K</span>  <span class="c1"># decision_sigma, decision_K</span></div>
+
+<div class="viewcode-block" id="Model.update_decision_params"><a class="viewcode-back" href="../../../reference/index.html#Contrast.model.model.Model.update_decision_params">[docs]</a>    <span class="k">def</span> <span class="nf">update_decision_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">decision_sigma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">decision_K</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_decision_params</span><span class="p">()</span></div>
+        
+<div class="viewcode-block" id="Model.compute_decision"><a class="viewcode-back" href="../../../reference/index.html#Contrast.model.model.Model.compute_decision">[docs]</a>    <span class="k">def</span> <span class="nf">compute_decision</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">contrast</span><span class="p">,</span><span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">compute_error</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">est_max</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span><span class="n">compute_relative_to_chance</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">chance</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="n">update</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">decision_sigma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">decision_K</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_decision_params</span><span class="p">()</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">decision_func</span><span class="p">(</span><span class="n">contrast</span><span class="p">,</span><span class="n">target_contrast</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_contrast</span><span class="p">,</span><span class="n">decision_sigma</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">decision_sigma</span><span class="p">,</span><span class="n">decision_K</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">decision_K</span><span class="p">,</span><span class="n">upper_limit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">upper_limit</span><span class="p">,</span><span class="n">lower_limit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lower_limit</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">compute_relative_to_chance</span><span class="p">:</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="p">((</span><span class="n">contrast</span><span class="o">-</span><span class="n">chance</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">upper_limit</span> <span class="o">-</span> <span class="n">chance</span><span class="p">))</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">upper_limit</span>
+
+        <span class="k">if</span> <span class="n">compute_error</span><span class="p">:</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">resp</span>
+
+        <span class="k">return</span> <span class="n">resp</span>      </div>
+
+<div class="viewcode-block" id="Model.response"><a class="viewcode-back" href="../../../reference/index.html#Contrast.model.model.Model.response">[docs]</a>    <span class="k">def</span> <span class="nf">response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">correct_answer</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">incorrect_answer</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span><span class="n">save_conv_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">target_data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">contrast</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">save_conv_filename</span><span class="o">=</span><span class="n">save_conv_filename</span><span class="p">,</span><span class="n">target_data</span><span class="o">=</span><span class="n">target_data</span><span class="p">)</span>
+        <span class="n">decision</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_decision</span><span class="p">(</span><span class="n">contrast</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">decision</span><span class="p">:</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="n">correct_answer</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="n">incorrect_answer</span>
+        <span class="k">return</span> <span class="n">resp</span><span class="p">,</span> <span class="n">decision</span><span class="p">,</span> <span class="n">contrast</span></div>
+        
+    <span class="c1">#@profile</span>
+<div class="viewcode-block" id="Model.get_op"><a class="viewcode-back" href="../../../reference/index.html#Contrast.model.model.Model.get_op">[docs]</a>    <span class="k">def</span> <span class="nf">get_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">sigma</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span><span class="n">K</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">field_height</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">field_width</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">pixel_eccentricity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">viewing_distance</span><span class="o">=</span><span class="mf">12.0</span><span class="p">,</span><span class="n">screen_pixel_size</span><span class="o">=</span><span class="mf">0.282</span><span class="p">):</span>
+        <span class="n">pixel_eccentricity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">get_pixels_at_degrees</span><span class="p">(</span><span class="n">degrees</span><span class="o">=</span><span class="n">pixel_eccentricity</span><span class="p">,</span><span class="n">viewing_distance</span><span class="o">=</span><span class="n">viewing_distance</span><span class="p">,</span><span class="n">screen_pixel_size</span><span class="o">=</span><span class="n">screen_pixel_size</span><span class="p">))</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">get_correct_coords</span><span class="p">(</span><span class="n">start_x</span><span class="o">=</span><span class="n">pixel_eccentricity</span><span class="p">,</span><span class="n">viewing_distance</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">field_height</span><span class="o">=</span><span class="n">field_height</span><span class="p">,</span><span class="n">field_width</span><span class="o">=</span><span class="n">field_width</span><span class="p">,</span><span class="n">pixel_width</span><span class="o">=</span><span class="n">screen_pixel_size</span><span class="p">,</span><span class="n">pixel_height</span><span class="o">=</span><span class="n">screen_pixel_size</span><span class="p">)</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">coords</span> <span class="o">/</span> <span class="n">screen_pixel_size</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">cdist</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">([[</span><span class="nb">int</span><span class="p">(</span><span class="n">pixel_eccentricity</span><span class="p">),</span><span class="mi">0</span><span class="p">]]),</span><span class="n">coords</span><span class="p">)</span>
+
+        <span class="n">J</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">sigma</span><span class="o">*</span><span class="n">K</span><span class="p">))))</span>
+
+        <span class="n">J</span> <span class="o">=</span> <span class="n">J</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">field_height</span><span class="p">,</span><span class="n">field_width</span><span class="p">))</span>
+        <span class="n">J</span> <span class="o">=</span> <span class="n">J</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">J</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">J</span></div>
+
+<div class="viewcode-block" id="Model.build_operators"><a class="viewcode-back" href="../../../reference/index.html#Contrast.model.model.Model.build_operators">[docs]</a>    <span class="k">def</span> <span class="nf">build_operators</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">eccentricities</span><span class="p">,</span><span class="n">viewing_distance</span><span class="o">=</span><span class="mf">22.0</span><span class="p">,</span><span class="n">screen_pixel_size</span><span class="o">=</span><span class="mf">0.282</span><span class="p">,</span><span class="n">field_height</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">field_width</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        NOTE: Ji and Javg as filters should each sum to one</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Building operators...&#39;</span><span class="p">,)</span>
+        <span class="n">eccentricities</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">eccentricities</span><span class="p">)))</span>       
+        <span class="n">operators</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">eccentricity</span> <span class="ow">in</span> <span class="n">eccentricities</span><span class="p">:</span>
+            <span class="n">sigma_eccentricity</span> <span class="o">=</span> <span class="n">eccentricity</span>
+
+            <span class="n">sigma_midget</span><span class="p">,</span><span class="n">sigma_parasol</span> <span class="o">=</span> <span class="n">get_sigma_map</span><span class="p">(</span><span class="n">start_x</span> <span class="o">=</span> <span class="n">eccentricity</span><span class="p">,</span><span class="n">field_height</span><span class="o">=</span><span class="n">field_height</span><span class="p">,</span><span class="n">field_width</span><span class="o">=</span><span class="n">field_width</span><span class="p">,</span><span class="n">viewing_distance</span><span class="o">=</span><span class="n">viewing_distance</span><span class="p">,</span><span class="n">screen_pixel_size</span><span class="o">=</span><span class="n">screen_pixel_size</span><span class="p">)</span>
+
+            <span class="n">sigma_midget</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sigma_midget</span><span class="p">[:,</span><span class="nb">int</span><span class="p">(</span><span class="n">field_width</span><span class="o">/</span><span class="mi">2</span><span class="p">):</span><span class="n">field_width</span><span class="p">])</span> 
+
+            <span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma_midget</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;eccentricity:&#39;</span><span class="p">,</span> <span class="n">eccentricity</span><span class="p">,</span> <span class="s1">&#39;contrast_sigma:&#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="s1">&#39;contrast_K:&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">)</span>
+
+            <span class="n">Ji</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_op</span><span class="p">(</span><span class="n">pixel_eccentricity</span><span class="o">=</span><span class="n">eccentricity</span><span class="p">,</span><span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span><span class="n">K</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">field_height</span><span class="o">=</span><span class="n">field_height</span><span class="p">,</span><span class="n">field_width</span><span class="o">=</span><span class="n">field_width</span><span class="p">,</span><span class="n">viewing_distance</span><span class="o">=</span><span class="n">viewing_distance</span><span class="p">,</span><span class="n">screen_pixel_size</span><span class="o">=</span><span class="n">screen_pixel_size</span><span class="p">)</span>
+            <span class="n">Javg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_op</span><span class="p">(</span><span class="n">pixel_eccentricity</span><span class="o">=</span><span class="n">eccentricity</span><span class="p">,</span><span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span><span class="n">K</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">,</span><span class="n">field_height</span><span class="o">=</span><span class="n">field_height</span><span class="p">,</span><span class="n">field_width</span><span class="o">=</span><span class="n">field_width</span><span class="p">,</span><span class="n">viewing_distance</span><span class="o">=</span><span class="n">viewing_distance</span><span class="p">,</span><span class="n">screen_pixel_size</span><span class="o">=</span><span class="n">screen_pixel_size</span><span class="p">)</span>
+            <span class="n">Jtot</span> <span class="o">=</span> <span class="n">Ji</span> <span class="o">-</span> <span class="n">Javg</span>
+            <span class="n">J</span> <span class="o">=</span> <span class="n">fft2</span><span class="p">(</span><span class="n">Jtot</span><span class="p">)</span>
+
+            <span class="n">g</span> <span class="o">=</span> <span class="n">fft2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">ifft2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">J</span><span class="p">,</span><span class="n">J</span><span class="p">)))))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">saveimages</span> <span class="ow">and</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cwd</span> <span class="o">+</span> <span class="s1">&#39;/images/op-&#39;</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:02}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="n">eccentricity</span><span class="p">]])</span><span class="o">+</span><span class="s1">&#39;-identity&#39;</span><span class="o">+</span><span class="s1">&#39;.png&#39;</span>
+                <span class="n">save_image</span><span class="p">(</span><span class="n">Ji</span><span class="p">,</span><span class="n">filename</span><span class="p">,</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;pixels&#39;</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;pixels&#39;</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;J foreground&#39;</span><span class="p">)</span>
+                
+                <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cwd</span> <span class="o">+</span> <span class="s1">&#39;/images/op-&#39;</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:02}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="n">eccentricity</span><span class="p">]])</span><span class="o">+</span><span class="s1">&#39;-average&#39;</span><span class="o">+</span><span class="s1">&#39;.png&#39;</span>
+                <span class="n">save_image</span><span class="p">(</span><span class="n">Javg</span><span class="p">,</span><span class="n">filename</span><span class="p">,</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;pixels&#39;</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;pixels&#39;</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;J background&#39;</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cwd</span> <span class="o">+</span> <span class="s1">&#39;/images/op-&#39;</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{:02}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="n">eccentricity</span><span class="p">]])</span><span class="o">+</span><span class="s1">&#39;-combined&#39;</span><span class="o">+</span><span class="s1">&#39;.png&#39;</span>
+                <span class="n">save_image</span><span class="p">(</span><span class="n">Jtot</span><span class="p">,</span><span class="n">filename</span><span class="p">,</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;pixels&#39;</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;pixels&#39;</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;J foreground-background&#39;</span><span class="p">)</span>
+            <span class="n">operators</span><span class="p">[</span><span class="n">eccentricity</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">sigma</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">K</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">Ji</span><span class="p">,</span><span class="n">Javg</span><span class="p">,</span><span class="n">Jtot</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;done.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">saveimages</span> <span class="ow">and</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="mi">100</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">width</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">eccentricity</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">eccentricities</span><span class="p">:</span>
+                <span class="n">op</span> <span class="o">=</span> <span class="n">operators</span><span class="p">[</span><span class="n">eccentricity</span><span class="p">][</span><span class="mi">5</span><span class="p">][</span><span class="nb">int</span><span class="p">(</span><span class="n">field_height</span><span class="o">/</span><span class="mi">2</span><span class="p">)]</span>
+                <span class="n">op</span> <span class="o">=</span> <span class="n">op</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">field_width</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="nb">int</span><span class="p">(</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">):</span><span class="nb">int</span><span class="p">(</span><span class="n">field_width</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="nb">int</span><span class="p">(</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">op</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">eccentricity</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Eccentricity&#39;</span><span class="p">)</span>
+            <span class="c1">#plt.xticks(xi, x)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Pixels&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Activation&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Activation spread of Jacobian (foreground-background)&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cwd</span> <span class="o">+</span> <span class="s1">&#39;/images/op-plot-&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;.png&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+            
+        <span class="k">return</span> <span class="n">operators</span></div>
+
+<div class="viewcode-block" id="Model.process"><a class="viewcode-back" href="../../../reference/index.html#Contrast.model.model.Model.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span><span class="n">save_conv_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">target_data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">),</span><span class="mi">255</span><span class="p">)</span>
+
+        <span class="n">image_height</span><span class="p">,</span><span class="n">image_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">view_size</span>
+        <span class="n">pixel_eccentricity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eccentricity</span>
+        <span class="n">sigma</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="n">operator</span><span class="p">,</span><span class="n">Ji</span><span class="p">,</span><span class="n">Javg</span><span class="p">,</span><span class="n">Jtot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">operators</span><span class="p">[</span><span class="n">pixel_eccentricity</span><span class="p">]</span>
+
+        <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="mf">1.0</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">image_height</span><span class="o">*</span><span class="n">image_width</span><span class="p">))</span>
+        <span class="n">raw_image</span> <span class="o">=</span> <span class="n">image</span>
+
+        <span class="n">op_field_height</span><span class="p">,</span> <span class="n">op_field_width</span> <span class="o">=</span> <span class="n">operator</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">operator</span>
+
+        <span class="n">fft_raw_image</span> <span class="o">=</span> <span class="n">fft2</span><span class="p">(</span><span class="n">raw_image</span><span class="p">)</span>
+        <span class="c1">#import pdb; pdb.set_trace()</span>
+
+        <span class="n">g_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">fft_raw_image</span><span class="p">,</span><span class="n">g</span><span class="p">)</span>
+        <span class="n">g_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">ifft2</span><span class="p">(</span><span class="n">g_image</span><span class="p">)))</span>
+
+        <span class="c1">#save_conv_filename = False</span>
+        <span class="k">if</span> <span class="n">save_conv_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">save_conv_filename</span>
+            <span class="n">background_intensity</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="c1"># process target so we can subtract it from the data image</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">target_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
+                <span class="n">target_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">target_data</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">),</span><span class="mi">255</span><span class="p">)</span>
+
+            <span class="n">target_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">target_data</span><span class="p">,</span><span class="mf">1.0</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">image_height</span><span class="o">*</span><span class="n">image_width</span><span class="p">))</span>
+
+            <span class="n">target_raw_image</span> <span class="o">=</span> <span class="n">target_image</span>
+
+            <span class="n">target_fft_raw_image</span> <span class="o">=</span> <span class="n">fft2</span><span class="p">(</span><span class="n">target_raw_image</span><span class="p">)</span>
+            <span class="n">target_g_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">target_fft_raw_image</span><span class="p">,</span><span class="n">g</span><span class="p">)</span>
+            <span class="n">target_g_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">ifft2</span><span class="p">(</span><span class="n">target_g_image</span><span class="p">)))</span>
+            <span class="n">intersection</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">target_g_image</span><span class="p">,(</span><span class="n">g_image</span><span class="o">-</span><span class="n">target_g_image</span><span class="p">))</span>
+            <span class="n">img_data</span> <span class="o">=</span> <span class="n">intersection</span>
+
+            <span class="k">if</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">img_data</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">image_height</span><span class="o">/</span><span class="mi">2</span><span class="p">)])</span>
+                <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Pixels&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Activation&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Activation on intersection</span><span class="se">\n</span><span class="s1"> between target and flank on image&#39;</span><span class="p">)</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cwd</span> <span class="o">+</span> <span class="s1">&#39;/images/plot-intersection-&#39;</span><span class="o">+</span><span class="n">filename</span><span class="o">+</span><span class="s1">&#39;.png&#39;</span><span class="p">)</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+                <span class="n">save_image</span><span class="p">(</span><span class="n">img_data</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">cwd</span> <span class="o">+</span> <span class="s1">&#39;/images/intersection-&#39;</span><span class="o">+</span><span class="n">filename</span><span class="o">+</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Pixels&#39;</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Pixels&#39;</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Activation on intersection</span><span class="se">\n</span><span class="s1"> between target and flank on image&#39;</span><span class="p">)</span>
+
+
+            <span class="k">if</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">g_image</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">image_height</span><span class="o">/</span><span class="mi">2</span><span class="p">)],</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;image convoled&#39;</span><span class="p">)</span> 
+                <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">raw_image</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">image_height</span><span class="o">/</span><span class="mi">2</span><span class="p">)],</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;image&#39;</span><span class="p">)</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">image_width</span><span class="o">*</span><span class="n">image_height</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">raw_image</span><span class="p">,</span><span class="n">g_image</span><span class="p">)[</span><span class="nb">int</span><span class="p">(</span><span class="n">image_height</span><span class="o">/</span><span class="mi">2</span><span class="p">)],</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;result&#39;</span><span class="p">)</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Legend&#39;</span><span class="p">)</span>
+                <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Pixels&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Activation&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Activation on cross-section</span><span class="se">\n</span><span class="s1"> of image&#39;</span><span class="p">)</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cwd</span> <span class="o">+</span> <span class="s1">&#39;/images/plot-result-&#39;</span><span class="o">+</span><span class="n">filename</span><span class="o">+</span><span class="s1">&#39;.png&#39;</span><span class="p">)</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="c1">#img_data = normalize(g_image)</span>
+                <span class="n">img_data</span> <span class="o">=</span> <span class="n">g_image</span>
+                <span class="k">if</span> <span class="kc">False</span><span class="p">:</span>
+                    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+                    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">img_data</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">image_height</span><span class="o">/</span><span class="mi">2</span><span class="p">)])</span>
+                    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Pixels&#39;</span><span class="p">)</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Activation&#39;</span><span class="p">)</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Activation on cross-section</span><span class="se">\n</span><span class="s1"> of image&#39;</span><span class="p">)</span>
+                    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cwd</span><span class="o">+</span><span class="s1">&#39;/images/plot-convolved-&#39;</span><span class="o">+</span><span class="n">filename</span><span class="o">+</span><span class="s1">&#39;.png&#39;</span><span class="p">)</span>
+                    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+                <span class="c1">#import pdb; pdb.set_trace()</span>
+
+                <span class="n">save_image</span><span class="p">(</span><span class="n">img_data</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">cwd</span><span class="o">+</span><span class="s1">&#39;/images/convolved-&#39;</span><span class="o">+</span><span class="n">filename</span><span class="o">+</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Pixels&#39;</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Pixels&#39;</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Activation on cross-section</span><span class="se">\n</span><span class="s1"> of image&#39;</span><span class="p">,</span><span class="n">overlay</span><span class="o">=</span><span class="n">raw_image</span><span class="p">,</span><span class="n">reverse_overlay</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;params&#39;</span><span class="p">][</span><span class="s1">&#39;window_color&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">,</span><span class="n">valmax</span><span class="o">=</span><span class="mf">0.0002</span><span class="p">)</span> <span class="c1">#Herzpg: 0.00005</span>
+
+        <span class="n">rrms_contrast</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">raw_image</span><span class="p">,</span><span class="n">g_image</span><span class="p">)))</span>
+        <span class="n">rms_contrast</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">raw_image</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">raw_image</span><span class="p">),</span><span class="n">raw_image</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">raw_image</span><span class="p">))))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  Results - RMS: </span><span class="si">%0.3f</span><span class="s1"> GRMS: </span><span class="si">%0.3f</span><span class="s1">  &#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">rms_contrast</span><span class="p">,</span> <span class="n">rrms_contrast</span><span class="p">))</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">rrms_contrast</span>
+        <span class="k">return</span> <span class="n">result</span></div></div>
+
+
+   
+<span class="c1"># CALL WITH:</span>
+<span class="c1"># ./framework.py ../herzog/screenshots/Herzog2012*.png</span>
+<span class="c1"># OR</span>
+<span class="c1"># ./framework.py ../herzog/screenshots/Herzog2012_expnum\=1_items\=0_jitter\=0_flank_target_height_ratio\=0.5_num_flank\=0_eccentricity\=16.66_orientation\=01.png</span>
+
+<span class="c1"># mark functions to profile with @profile</span>
+<span class="c1"># profile with: kernprof -l -v framework.py</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+    
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Contrast 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Antonio M. Rodriguez and Richard H. Granger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

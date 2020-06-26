@@ -1,0 +1,690 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Contrast API Reference &#8212; Contrast 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Overview" href="../overview.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../overview.html" title="Overview"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Contrast 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="contrast-api-reference">
+<h1>Contrast API Reference<a class="headerlink" href="#contrast-api-reference" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<span class="target" id="module-Contrast"></span><span class="target" id="module-Contrast.model.model"></span><div class="section" id="module-model">
+<h2>Module: Model<a class="headerlink" href="#module-model" title="Permalink to this headline">¶</a></h2>
+<p>Class for building Jacobian operators and processing an image.</p>
+<dl class="class">
+<dt id="Contrast.model.model.Model">
+<em class="property">class </em><code class="descclassname">Contrast.model.model.</code><code class="descname">Model</code><span class="sig-paren">(</span><em>eccentricities=[3.88], viewing_distance=29.5, screen_pixel_size=0.282, view_size=(350, 350), view_pos=(0, 0), target_contrast=0.0, est_max=0.01, K=5.0, upper_limit=0.85, lower_limit=0.0, saveimages=False, cwd='', name='', logging=None, **params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/model.html#Model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.model.Model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Documentation for model</p>
+<p>More documentation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>visible <span class="classifier-delimiter">:</span> <span class="classifier"><strong>True</strong> or False</span></dt>
+<dd><p class="first last">documentation on parameter</p>
+</dd>
+<dt>newPos <span class="classifier-delimiter">:</span> <span class="classifier"><strong>None</strong> or [x,y]</span></dt>
+<dd><p class="first last">documentation on parameter</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="Contrast.model.model.Model.build_operators">
+<code class="descname">build_operators</code><span class="sig-paren">(</span><em>eccentricities</em>, <em>viewing_distance=22.0</em>, <em>screen_pixel_size=0.282</em>, <em>field_height=100</em>, <em>field_width=100</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/model.html#Model.build_operators"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.model.Model.build_operators" title="Permalink to this definition">¶</a></dt>
+<dd><p>NOTE: Ji and Javg as filters should each sum to one</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.model.Model.compute_decision">
+<code class="descname">compute_decision</code><span class="sig-paren">(</span><em>contrast</em>, <em>sigma=1.0</em>, <em>compute_error=False</em>, <em>est_max=-1.0</em>, <em>compute_relative_to_chance=False</em>, <em>chance=0.0</em>, <em>update=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/model.html#Model.compute_decision"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.model.Model.compute_decision" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.model.Model.get_decision_params">
+<code class="descname">get_decision_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/model.html#Model.get_decision_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.model.Model.get_decision_params" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.model.Model.get_op">
+<code class="descname">get_op</code><span class="sig-paren">(</span><em>sigma=0.01</em>, <em>K=1.0</em>, <em>field_height=100</em>, <em>field_width=100</em>, <em>pixel_eccentricity=0</em>, <em>viewing_distance=12.0</em>, <em>screen_pixel_size=0.282</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/model.html#Model.get_op"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.model.Model.get_op" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.model.Model.process">
+<code class="descname">process</code><span class="sig-paren">(</span><em>data=None</em>, <em>name=''</em>, <em>save_conv_filename=None</em>, <em>target_data=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/model.html#Model.process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.model.Model.process" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.model.Model.response">
+<code class="descname">response</code><span class="sig-paren">(</span><em>data</em>, <em>name=''</em>, <em>correct_answer='left'</em>, <em>incorrect_answer='right'</em>, <em>save_conv_filename=None</em>, <em>target_data=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/model.html#Model.response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.model.Model.response" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.model.Model.update_decision_params">
+<code class="descname">update_decision_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/model.html#Model.update_decision_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.model.Model.update_decision_params" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="Contrast.model.model.decision_func">
+<code class="descclassname">Contrast.model.model.</code><code class="descname">decision_func</code><span class="sig-paren">(</span><em>contrast</em>, <em>target_contrast=0</em>, <em>decision_sigma=0</em>, <em>decision_K=0</em>, <em>upper_limit=0</em>, <em>lower_limit=0</em>, <em>return_all=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/model.html#decision_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.model.decision_func" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<span class="target" id="module-Contrast.model.library"></span><div class="section" id="library">
+<h2>Library<a class="headerlink" href="#library" title="Permalink to this headline">¶</a></h2>
+<p>Contains functions that are independent of any specific experiment.</p>
+<dl class="function">
+<dt id="Contrast.model.library.get_correct_coords">
+<code class="descclassname">Contrast.model.library.</code><code class="descname">get_correct_coords</code><span class="sig-paren">(</span><em>start_x=0</em>, <em>viewing_distance=12.0</em>, <em>field_height=10</em>, <em>field_width=10</em>, <em>pixel_width=0.282</em>, <em>pixel_height=0.282</em>, <em>**config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/library.html#get_correct_coords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.library.get_correct_coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the coords in terms of degree of visual angle
+converts Euclidean to Polar coordinates based on a fixation point, viewing distance, and a window size
+polar coordinate conversion:</p>
+<blockquote>
+<div><ul class="simple">
+<li>r = np.sqrt(np.square(x) + np.square(y))</li>
+<li>th = np.arctan2(y,x)</li>
+</ul>
+</div></blockquote>
+<p>log-polar coordinate conversion based on degrees of visual angle from fixation:</p>
+<blockquote>
+<div><ul class="simple">
+<li>r = np.rad2deg(np.arctan2(np.sqrt(np.square(x) + np.square(y)),viewing_distance*25.4))</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="Contrast.model.library.get_degrees_at_pixels">
+<code class="descclassname">Contrast.model.library.</code><code class="descname">get_degrees_at_pixels</code><span class="sig-paren">(</span><em>pixels=10</em>, <em>viewing_distance=24.0</em>, <em>screen_pixel_size=0.282</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/library.html#get_degrees_at_pixels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.library.get_degrees_at_pixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>pixels - if fovea is centered on an image, pixels is half the image width in pixels
+returns - half the viewing_angle</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Contrast.model.library.get_image_width_in_degrees">
+<code class="descclassname">Contrast.model.library.</code><code class="descname">get_image_width_in_degrees</code><span class="sig-paren">(</span><em>image_width=100</em>, <em>viewing_distance=24.0</em>, <em>screen_pixel_size=0.282</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/library.html#get_image_width_in_degrees"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.library.get_image_width_in_degrees" title="Permalink to this definition">¶</a></dt>
+<dd><p>image_width is size of entire in pixels
+returns: degrees to span the entire image</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Contrast.model.library.get_image_width_in_pixels">
+<code class="descclassname">Contrast.model.library.</code><code class="descname">get_image_width_in_pixels</code><span class="sig-paren">(</span><em>degrees=1.0</em>, <em>viewing_distance=24.0</em>, <em>screen_pixel_size=0.282</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/library.html#get_image_width_in_pixels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.library.get_image_width_in_pixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>degrees is viewing angle of the entire image
+returns: num of pixels that span the entire image</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Contrast.model.library.get_pixels_at_degrees">
+<code class="descclassname">Contrast.model.library.</code><code class="descname">get_pixels_at_degrees</code><span class="sig-paren">(</span><em>degrees=1.0</em>, <em>viewing_distance=24.0</em>, <em>screen_pixel_size=0.282</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/library.html#get_pixels_at_degrees"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.library.get_pixels_at_degrees" title="Permalink to this definition">¶</a></dt>
+<dd><p>degrees - if fovea is centered on an image, degrees is half the viewing angle
+returns: pixels - if fovea is centered on an image, pixels is half the image width in pixels</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Contrast.model.library.get_sigma_map">
+<code class="descclassname">Contrast.model.library.</code><code class="descname">get_sigma_map</code><span class="sig-paren">(</span><em>start_x=0</em>, <em>field_height=100</em>, <em>field_width=100</em>, <em>viewing_distance=12.0</em>, <em>screen_pixel_size=0.282</em>, <em>debug=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/library.html#get_sigma_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.library.get_sigma_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>For each point on the image (image_height x image_width) returns the sigma associated
+with each point due to the offset from the fovea of the image.  The average of all the sigmas
+may be used as an approximation to the full set of all sigmas.  Each sigma is used as the basis
+for creating the J operator which is the weighting of all the pixels given one pixel as a focal point.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>start_x</strong> – is in degrees of visual angle</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">an entire field_height x field_width array of sigma values</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Contrast.model.library.get_viewing_distance_to_span_image">
+<code class="descclassname">Contrast.model.library.</code><code class="descname">get_viewing_distance_to_span_image</code><span class="sig-paren">(</span><em>image_width=20</em>, <em>degree_span=1.0</em>, <em>screen_pixel_size=0.282</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/library.html#get_viewing_distance_to_span_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.library.get_viewing_distance_to_span_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>degrees is viewing angle of the entire image
+image_width is size of entire in pixels</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Contrast.model.library.normalize">
+<code class="descclassname">Contrast.model.library.</code><code class="descname">normalize</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/library.html#normalize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.library.normalize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Contrast.model.library.sorted_ls">
+<code class="descclassname">Contrast.model.library.</code><code class="descname">sorted_ls</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/library.html#sorted_ls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.library.sorted_ls" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<span class="target" id="module-Contrast.model.newlibrary"></span><p>TestDriver
+Must run with Python 3.7 or greater</p>
+<dl class="class">
+<dt id="Contrast.model.newlibrary.Experiment">
+<em class="property">class </em><code class="descclassname">Contrast.model.newlibrary.</code><code class="descname">Experiment</code><span class="sig-paren">(</span><em>params=None</em>, <em>reportobj=None</em>, <em>subroutines=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Experiment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Experiment" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Contains settings and routines</dt>
+<dd>call like this: ./herzog.py -model test=1,test2=’0’</dd>
+</dl>
+<p>More documentation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>visible <span class="classifier-delimiter">:</span> <span class="classifier"><strong>True</strong> or False</span></dt>
+<dd><p class="first last">documentation on parameter</p>
+</dd>
+<dt>newPos <span class="classifier-delimiter">:</span> <span class="classifier"><strong>None</strong> or [x,y]</span></dt>
+<dd><p class="first last">documentation on parameter</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="Contrast.model.newlibrary.Experiment.displayreport">
+<code class="descname">displayreport</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Experiment.displayreport"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Experiment.displayreport" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.Experiment.end">
+<code class="descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Experiment.end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Experiment.end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.Experiment.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>runsubject=False</em>, <em>monitor=None</em>, <em>distance=None</em>, <em>store_runtime_info=False</em>, <em>display_report=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Experiment.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Experiment.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.Experiment.update_params">
+<code class="descname">update_params</code><span class="sig-paren">(</span><em>args</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Experiment.update_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Experiment.update_params" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Contrast.model.newlibrary.ExperimentConditions">
+<em class="property">class </em><code class="descclassname">Contrast.model.newlibrary.</code><code class="descname">ExperimentConditions</code><span class="sig-paren">(</span><em>levels=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#ExperimentConditions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.ExperimentConditions" title="Permalink to this definition">¶</a></dt>
+<dd><p>More documentation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>visible <span class="classifier-delimiter">:</span> <span class="classifier"><strong>True</strong> or False</span></dt>
+<dd><p class="first last">documentation on parameter</p>
+</dd>
+<dt>newPos <span class="classifier-delimiter">:</span> <span class="classifier"><strong>None</strong> or [x,y]</span></dt>
+<dd><p class="first last">documentation on parameter</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="Contrast.model.newlibrary.ImageComponent">
+<em class="property">class </em><code class="descclassname">Contrast.model.newlibrary.</code><code class="descname">ImageComponent</code><span class="sig-paren">(</span><em>image=None</em>, <em>start=0</em>, <em>stop=1000000</em>, <em>mask=None</em>, <em>units='deg'</em>, <em>pos=(0.0</em>, <em>0.0)</em>, <em>size=None</em>, <em>ori=0.0</em>, <em>color=(1.0</em>, <em>1.0</em>, <em>1.0)</em>, <em>colorSpace='rgb'</em>, <em>contrast=1.0</em>, <em>opacity=1.0</em>, <em>depth=0</em>, <em>interpolate=False</em>, <em>flipHoriz=False</em>, <em>flipVert=False</em>, <em>texRes=128</em>, <em>name=None</em>, <em>autoLog=None</em>, <em>maskParams=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#ImageComponent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.ImageComponent" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Contrast.model.newlibrary.ImageComponent.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>win</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#ImageComponent.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.ImageComponent.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Contrast.model.newlibrary.Params">
+<em class="property">class </em><code class="descclassname">Contrast.model.newlibrary.</code><code class="descname">Params</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Params" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Contrast.model.newlibrary.Params.flatten">
+<code class="descname">flatten</code><span class="sig-paren">(</span><em>prefix=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Params.flatten"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Params.flatten" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Contrast.model.newlibrary.PolygonComponent">
+<em class="property">class </em><code class="descclassname">Contrast.model.newlibrary.</code><code class="descname">PolygonComponent</code><span class="sig-paren">(</span><em>edges=3</em>, <em>radius=0.5</em>, <em>start=0</em>, <em>stop=1000000</em>, <em>units='deg'</em>, <em>lineWidth=1.5</em>, <em>lineColor='white'</em>, <em>lineColorSpace='rgb'</em>, <em>fillColor=None</em>, <em>fillColorSpace='rgb'</em>, <em>vertices=((-0.5</em>, <em>0)</em>, <em>(0</em>, <em>0.5)</em>, <em>(0.5</em>, <em>0))</em>, <em>closeShape=True</em>, <em>pos=(0</em>, <em>0)</em>, <em>size=1</em>, <em>ori=0.0</em>, <em>opacity=1.0</em>, <em>contrast=1.0</em>, <em>depth=0</em>, <em>interpolate=True</em>, <em>name=None</em>, <em>autoLog=None</em>, <em>autoDraw=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#PolygonComponent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.PolygonComponent" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Contrast.model.newlibrary.PolygonComponent.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>win</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#PolygonComponent.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.PolygonComponent.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Contrast.model.newlibrary.RectComponent">
+<em class="property">class </em><code class="descclassname">Contrast.model.newlibrary.</code><code class="descname">RectComponent</code><span class="sig-paren">(</span><em>width=0.5</em>, <em>height=0.5</em>, <em>start=0</em>, <em>stop=1000000</em>, <em>autoLog=None</em>, <em>units='deg'</em>, <em>lineWidth=1.5</em>, <em>lineColor='white'</em>, <em>lineColorSpace='rgb'</em>, <em>fillColor=None</em>, <em>fillColorSpace='rgb'</em>, <em>pos=(0</em>, <em>0)</em>, <em>ori=0.0</em>, <em>opacity=1.0</em>, <em>contrast=1.0</em>, <em>depth=0</em>, <em>interpolate=True</em>, <em>name=None</em>, <em>autoDraw=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#RectComponent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.RectComponent" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Contrast.model.newlibrary.RectComponent.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>win</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#RectComponent.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.RectComponent.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Contrast.model.newlibrary.Response">
+<em class="property">class </em><code class="descclassname">Contrast.model.newlibrary.</code><code class="descname">Response</code><span class="sig-paren">(</span><em>key=''</em>, <em>rt=0</em>, <em>correct=False</em>, <em>prob=0.0</em>, <em>contrast=0.0</em>, <em>level=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Response" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="Contrast.model.newlibrary.Routine">
+<em class="property">class </em><code class="descclassname">Contrast.model.newlibrary.</code><code class="descname">Routine</code><span class="sig-paren">(</span><em>components=[]</em>, <em>timeout=10</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Routine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Routine" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Contains only StimulusComponents</dt>
+<dd>Represents a SCREEN of different stimuli
+Is associated with a filename for saving the screen
+Is associated with a keyboard response</dd>
+</dl>
+<p>More documentation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>visible <span class="classifier-delimiter">:</span> <span class="classifier"><strong>True</strong> or False</span></dt>
+<dd><p class="first last">documentation on parameter</p>
+</dd>
+<dt>newPos <span class="classifier-delimiter">:</span> <span class="classifier"><strong>None</strong> or [x,y]</span></dt>
+<dd><p class="first last">documentation on parameter</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="Contrast.model.newlibrary.Routine.addComponent">
+<code class="descname">addComponent</code><span class="sig-paren">(</span><em>component</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Routine.addComponent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Routine.addComponent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.Routine.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>win</em>, <em>exp_handler=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Routine.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Routine.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.Routine.end">
+<code class="descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Routine.end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Routine.end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.Routine.get_answer">
+<code class="descname">get_answer</code><span class="sig-paren">(</span><em>trialparams={}</em>, <em>loopstate={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Routine.get_answer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Routine.get_answer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.Routine.get_filename">
+<code class="descname">get_filename</code><span class="sig-paren">(</span><em>trialparams={}</em>, <em>loopstate={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Routine.get_filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Routine.get_filename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.Routine.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>runmodel=None</em>, <em>genstim=False</em>, <em>trialparams={}</em>, <em>params={}</em>, <em>loopstate={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Routine.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Routine.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.Routine.update_levels">
+<code class="descname">update_levels</code><span class="sig-paren">(</span><em>levels</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Routine.update_levels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Routine.update_levels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.Routine.update_params">
+<code class="descname">update_params</code><span class="sig-paren">(</span><em>trialparams={}</em>, <em>loopstate={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Routine.update_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Routine.update_params" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Contrast.model.newlibrary.SoundComponent">
+<em class="property">class </em><code class="descclassname">Contrast.model.newlibrary.</code><code class="descname">SoundComponent</code><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#SoundComponent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.SoundComponent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="Contrast.model.newlibrary.StaircaseTrialRoutine">
+<em class="property">class </em><code class="descclassname">Contrast.model.newlibrary.</code><code class="descname">StaircaseTrialRoutine</code><span class="sig-paren">(</span><em>stair_params=[]</em>, <em>level_values=None</em>, <em>subroutines=[]</em>, <em>saveTrials=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#StaircaseTrialRoutine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.StaircaseTrialRoutine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Can contain a sequence of either Routines StairCaseTrialRoutines or TrialRoutine</p>
+<p>More documentation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>visible <span class="classifier-delimiter">:</span> <span class="classifier"><strong>True</strong> or False</span></dt>
+<dd><p class="first last">documentation on parameter</p>
+</dd>
+<dt>newPos <span class="classifier-delimiter">:</span> <span class="classifier"><strong>None</strong> or [x,y]</span></dt>
+<dd><p class="first last">documentation on parameter</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="Contrast.model.newlibrary.StaircaseTrialRoutine.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>win</em>, <em>exp_handler=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#StaircaseTrialRoutine.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.StaircaseTrialRoutine.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.StaircaseTrialRoutine.end">
+<code class="descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#StaircaseTrialRoutine.end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.StaircaseTrialRoutine.end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.StaircaseTrialRoutine.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>runmodel=None</em>, <em>genstim=False</em>, <em>trialparams={}</em>, <em>params={}</em>, <em>loopstate={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#StaircaseTrialRoutine.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.StaircaseTrialRoutine.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.StaircaseTrialRoutine.update_levels">
+<code class="descname">update_levels</code><span class="sig-paren">(</span><em>levels</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#StaircaseTrialRoutine.update_levels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.StaircaseTrialRoutine.update_levels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Contrast.model.newlibrary.StimulusComponent">
+<em class="property">class </em><code class="descclassname">Contrast.model.newlibrary.</code><code class="descname">StimulusComponent</code><span class="sig-paren">(</span><em>start=0</em>, <em>stop=1000000</em>, <em>name=None</em>, <em>params={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#StimulusComponent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.StimulusComponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Documentation for model</p>
+<p>More documentation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>visible <span class="classifier-delimiter">:</span> <span class="classifier"><strong>True</strong> or False</span></dt>
+<dd><p class="first last">documentation on parameter</p>
+</dd>
+<dt>newPos <span class="classifier-delimiter">:</span> <span class="classifier"><strong>None</strong> or [x,y]</span></dt>
+<dd><p class="first last">documentation on parameter</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="Contrast.model.newlibrary.StimulusComponent.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>win</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#StimulusComponent.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.StimulusComponent.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.StimulusComponent.end">
+<code class="descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#StimulusComponent.end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.StimulusComponent.end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.StimulusComponent.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>genstim=False</em>, <em>trialparams={}</em>, <em>loopstate={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#StimulusComponent.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.StimulusComponent.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.StimulusComponent.start">
+<code class="descname">start</code><span class="sig-paren">(</span><em>trialparams={}</em>, <em>loopstate={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#StimulusComponent.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.StimulusComponent.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.StimulusComponent.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#StimulusComponent.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.StimulusComponent.stop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.StimulusComponent.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>trialparams={}</em>, <em>loopstate={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#StimulusComponent.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.StimulusComponent.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Contrast.model.newlibrary.TrialRoutine">
+<em class="property">class </em><code class="descclassname">Contrast.model.newlibrary.</code><code class="descname">TrialRoutine</code><span class="sig-paren">(</span><em>conditions=[]</em>, <em>nReps=1</em>, <em>subroutines=[]</em>, <em>saveTrials=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#TrialRoutine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.TrialRoutine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Can contain a sequence of either Routines StairCaseTrialRoutines or TrialRoutine</p>
+<p>More documentation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>visible <span class="classifier-delimiter">:</span> <span class="classifier"><strong>True</strong> or False</span></dt>
+<dd><p class="first last">documentation on parameter</p>
+</dd>
+<dt>newPos <span class="classifier-delimiter">:</span> <span class="classifier"><strong>None</strong> or [x,y]</span></dt>
+<dd><p class="first last">documentation on parameter</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="Contrast.model.newlibrary.TrialRoutine.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>win</em>, <em>exp_handler=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#TrialRoutine.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.TrialRoutine.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.TrialRoutine.end">
+<code class="descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#TrialRoutine.end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.TrialRoutine.end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.TrialRoutine.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>runmodel=None</em>, <em>genstim=False</em>, <em>trialparams={}</em>, <em>params={}</em>, <em>loopstate={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#TrialRoutine.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.TrialRoutine.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.newlibrary.TrialRoutine.update_levels">
+<code class="descname">update_levels</code><span class="sig-paren">(</span><em>levels</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#TrialRoutine.update_levels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.TrialRoutine.update_levels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="Contrast.model.newlibrary.print_df">
+<code class="descclassname">Contrast.model.newlibrary.</code><code class="descname">print_df</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#print_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.print_df" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<span class="target" id="module-Contrast.model.plotting"></span><div class="section" id="plotting-library">
+<h2>Plotting Library<a class="headerlink" href="#plotting-library" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="Contrast.model.plotting.plot_figure">
+<code class="descclassname">Contrast.model.plotting.</code><code class="descname">plot_figure</code><span class="sig-paren">(</span><em>figure</em>, <em>name='Default'</em>, <em>caption='Default caption.'</em>, <em>experiment_name=''</em>, <em>dirname='report'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/plotting.html#plot_figure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.plotting.plot_figure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves a figure.</p>
+</dd></dl>
+
+</div>
+<span class="target" id="module-Contrast.model.report"></span><div class="section" id="report">
+<h2>Report<a class="headerlink" href="#report" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Contrast.model.report.Report">
+<em class="property">class </em><code class="descclassname">Contrast.model.report.</code><code class="descname">Report</code><span class="sig-paren">(</span><em>filenames=[]</em>, <em>only_most_recent=False</em>, <em>contrast_results=0</em>, <em>dirname=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/report.html#Report"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.report.Report" title="Permalink to this definition">¶</a></dt>
+<dd><p>Documentation for Report</p>
+<p>More documentation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>visible <span class="classifier-delimiter">:</span> <span class="classifier"><strong>True</strong> or False</span></dt>
+<dd><p class="first last">documentation on parameter</p>
+</dd>
+<dt>newPos <span class="classifier-delimiter">:</span> <span class="classifier"><strong>None</strong> or [x,y]</span></dt>
+<dd><p class="first last">documentation on parameter</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="Contrast.model.report.Report.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/report.html#Report.generate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.report.Report.generate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.report.Report.plot_data">
+<code class="descname">plot_data</code><span class="sig-paren">(</span><em>df, df_err=[], fname='plot', title='title', xlabel='xlabel', ylabel='ylabel', plot_min=0, plot_max=1, index_marker_shape=['o', 'v'], columns_marker_color=['m', 'g'], columns_title='Column_title', linestyle='--', scale_plot=True, x_scale_factor=1.0, x_scale_addition=0.0, plot_on_number_line=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/report.html#Report.plot_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.report.Report.plot_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.report.Report.plot_data2">
+<code class="descname">plot_data2</code><span class="sig-paren">(</span><em>df, fname='plot', experiment_name='pelli', exp_name='LargeLetters', title='title', xlabel='xlabel', ylabel='ylabel', plot_min=0, plot_max=100, index_marker_shape=['o', 'v'], columns_marker_color=['m', 'g'], columns_title='Column_title', linestyle='--', scale_plot=True, show_target_as_dash=True, x_scale_factor=1.0, x_scale_addition=0.0, target_value=None, **params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/report.html#Report.plot_data2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.report.Report.plot_data2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.report.Report.plot_data_as_barplot">
+<code class="descname">plot_data_as_barplot</code><span class="sig-paren">(</span><em>df</em>, <em>fname='plot'</em>, <em>title='title'</em>, <em>xlabel='xlabel'</em>, <em>ylabel='ylabel'</em>, <em>target_value=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/report.html#Report.plot_data_as_barplot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.report.Report.plot_data_as_barplot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.report.Report.plot_data_as_barplot2">
+<code class="descname">plot_data_as_barplot2</code><span class="sig-paren">(</span><em>df</em>, <em>fname='plot'</em>, <em>experiment_name='pelli'</em>, <em>exp_name='LargeLetters'</em>, <em>title='title'</em>, <em>xlabel='xlabel'</em>, <em>ylabel='ylabel'</em>, <em>columns_labels=None</em>, <em>plot_bar_min=0</em>, <em>plot_bar_max=40</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/report.html#Report.plot_data_as_barplot2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.report.Report.plot_data_as_barplot2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="Contrast.model.report.Report.plot_decision_func">
+<code class="descname">plot_decision_func</code><span class="sig-paren">(</span><em>df, df_contrast=None, target_contrast=0.027, sigma=0.05, K=5.0, zoomed=False, fname='plot', experiment_name='pelli', exp_name='LargeLetters', title='title', xlabel='xlabel', ylabel='ylabel', index_marker_shape=['o', 'v'], columns_marker_color=['m', 'g'], columns_title='Column_title', scale_range=[0, 1], upper_limit=0.85, lower_limit=0.0, x_scale_factor=1.0, show_target_as_dash=True, compute_relative_to_chance=False, chance=0.0, compute_error=False, plot_columns_labels=['0', '1', '2', '3', '4'], show_legend=False, decision_prob_label='response', est_max=0, transpose_df=True, use_target_contrast=False, legend_alpha=0.7, legend_loc=8, target_value=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/report.html#Report.plot_decision_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.report.Report.plot_decision_func" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="Contrast.model.report.fit">
+<code class="descclassname">Contrast.model.report.</code><code class="descname">fit</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/report.html#fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.report.fit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Contrast.model.report.main">
+<code class="descclassname">Contrast.model.report.</code><code class="descname">main</code><span class="sig-paren">(</span><em>reportclass=&lt;class 'Contrast.model.report.Report'&gt;</em>, <em>filenames=None</em>, <em>only_most_recent=False</em>, <em>dirname=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/report.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.report.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="Contrast.model.report.sorted_ls">
+<code class="descclassname">Contrast.model.report.</code><code class="descname">sorted_ls</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/report.html#sorted_ls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.report.sorted_ls" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<span class="target" id="module-Contrast.model.stimulus"></span><div class="section" id="stimulus-library">
+<h2>Stimulus Library<a class="headerlink" href="#stimulus-library" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="Contrast.model.stimulus.save_image">
+<code class="descclassname">Contrast.model.stimulus.</code><code class="descname">save_image</code><span class="sig-paren">(</span><em>data</em>, <em>filename</em>, <em>xlabel='pixels'</em>, <em>ylabel='pixels'</em>, <em>title='title'</em>, <em>overlay=None</em>, <em>reverse_overlay=False</em>, <em>valmax=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/stimulus.html#save_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.stimulus.save_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<span class="target" id="module-Contrast.experiments.herzog"></span></div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Contrast API Reference</a><ul>
+<li><a class="reference internal" href="#module-model">Module: Model</a></li>
+<li><a class="reference internal" href="#library">Library</a></li>
+<li><a class="reference internal" href="#plotting-library">Plotting Library</a></li>
+<li><a class="reference internal" href="#report">Report</a></li>
+<li><a class="reference internal" href="#stimulus-library">Stimulus Library</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../overview.html"
+                        title="previous chapter">Overview</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../overview.html" title="Overview"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Contrast 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Antonio M. Rodriguez and Richard H. Granger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>
