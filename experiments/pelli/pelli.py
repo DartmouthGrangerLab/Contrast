@@ -1,89 +1,140 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-=========================================================
-Experiment:Pelli
-=========================================================
+TestDriver
 """
+import numpy as np  # whole numpy lib is available, prepend 'np.'
+import sys
+import os
+sys.path.append(os.path.realpath(os.path.join(os.getcwd(),'..','..')))
 
-import collections
+from psychopy import logging,visual,core
+logging.console.setLevel(logging.CRITICAL)  # TURN OFF WARNINGS TO THE CONSOLE
+from psychopy.tools.coordinatetools import pol2cart
 
-import numpy as np
-import pandas as pd
+from Contrast.model.newlibrary import Params,StimulusComponent,Experiment,TrialRoutine,StaircaseTrialRoutine,Routine
 
-from Contrast.framework import main
-from Contrast.library import get_image_width_in_pixels
-from Contrast.stimulus import save_df, save_image, load_images
+dirname = os.getcwd()
+
+background_color = [1,1,1]
+eccentricity = [5,10,15,20]
+pelli_params = Params(
+    name             = 'pelli',
+    expName          = 'pelli',
+    exp_num          = 1,
+    viewing_distance = 22*2.54, 
+    monitor          = 'testMonitor',
+    logfile          = 'pelli.log',
+    exp_info         = {u'session': u'001', u'participant': u'default'},
+    cwd              = os.getcwd(),
+    window_color     = background_color,
+    target_identifier= ('flank_distance',-1.0),
+    levels = Params(
+        flank_distance = np.array([-1.0,0.05,0.1,0.15,0.2,0.3,0.4,0.6]),
+        offset = eccentricity),
+    experiment = Params(
+        nTrialReps= 2),
+    stimulus   = Params(
+        name = '',
+        target_size = 1.0,
+        gap_size = 0.4,
+        stim = '02',
+        line_width= 0.4),
+    model      = Params(eccentricities= eccentricity, # in deg
+                        view_size= (500,500), # in pixels
+                        view_pos= (0,0), # center in degrees of visual angle
+                        upper_limit= 0.85,                   
+                        lower_limit= 0.0))
 
 
-def flatten(l):
-    for el in l:
-        if isinstance(el, collections.Iterable) and not isinstance(el, basestring):
-            for sub in flatten(el):
-                yield sub
+class PelliRoutine(Routine):
+    def __init__(self,params,components=[],timeout=10):
+        super(PelliRoutine, self).__init__(components=components,timeout=timeout)
+        self.exp_name = params['name']
+
+    def get_filename(self,trialparams={},loopstate={}):
+        paramstr = '_'.join(['{:02}'.format(y) for x,y in list(trialparams.items())])
+        return self.exp_name+'_'+paramstr+'.png'        
+
+    def run(self,runmodel=None,genstim=False,trialparams={},params={},loopstate={}):
+        offset = trialparams['offset']
+        params['model']['view_pos'] = (offset,0)
+        if not genstim:
+            runmodel.eccentricity = offset
+        #print('offset:'+str(offset))
+        return super(PelliRoutine, self).run(runmodel=runmodel,genstim=genstim,trialparams=trialparams,params=params,loopstate=loopstate)
+
+
+class PelliComponent(StimulusComponent):
+    def __init__(self, params={}, start=0, stop=1000000):
+        super(PelliComponent, self).__init__(params=params,start=start, stop=stop)
+
+        self.line_width = self.params['line_width']
+        self.gap_width= self.params['gap_size']
+        self.target_diameter= self.params['target_size']
+        #self.flank_height= self.params['flank_height']
+        self.eccentricity = 10.0
+        self.current_depth = 1.0
+        self.items = []
+
+    def letter(self,letter='a',stim='02',item='01'):
+        return visual.ImageStim(self.win, image=dirname+os.sep+'templates/stim-'+stim+'-item-'+item+'.png', mask=None, units='deg', pos=(self.eccentricity, 0.0), size=None, ori=0.0, color=(1.0, 1.0, 1.0), colorSpace='rgb', contrast=1.0, opacity=1.0, depth=0, interpolate=False, flipHoriz=False, flipVert=False, texRes=128, name=None, autoLog=None, maskParams=None)
+    
+    def create(self,win):
+        self.win = win
+        self.current_depth = 0
+
+        self.flanks = []
+        stim = self.params['stim']
+        flank_left = self.letter('a',stim=stim,item='01')
+        flank_right = self.letter('a',stim=stim,item='01')
+        self.flanks.extend([flank_left,flank_right])
+        self.items.extend(self.flanks)
+        self.target = self.letter('r',stim=stim,item='02')
+        self.items.extend([self.target])
+
+    def update(self,trialparams={},loopstate={}):
+        flank_distance = trialparams['flank_distance']
+        #flank_orientation = trialparams['flank_orientation']
+        offset = trialparams['offset']
+        target_orientation = 0
+
+        flank_left,flank_right = self.flanks
+        flank_width = flank_left.size[0]
+        if flank_distance > 0:
+            flank_left.setPos((offset-(flank_distance+flank_width),0))
+            flank_right.setPos((offset+(flank_distance+flank_width),0))
+            flank_left.setOpacity(1)
+            flank_right.setOpacity(1)
         else:
-            yield el
+            flank_left.setOpacity(0)
+            flank_right.setOpacity(0)
+            
+        self.target.setPos((offset,0))
 
-def build_stimulus(unit_images = None,combinations = (1, 2, 1),image_height=600,image_width = 600):
-    image = np.ones((image_height,image_width))
-    center_x,center_y = image_height/2,image_width/2
-
-    subimage = np.hstack([unit_images[i] for i in combinations])/255.0
-
-    x,y = center_x-subimage.shape[0]/2, center_y-subimage.shape[1]/2
-    image[x:x+subimage.shape[0],y:y+subimage.shape[1]] = subimage
-    return image
-
-def build_experiment(experiment_name='',displayname='Default',image_height=600,image_width=600,viewing_distance=12.0,screen_pixel_size=0.282,offset_max=850,offset_nsteps=40,build_stimulus_func=build_stimulus,flank_distances=[0],**params):
-    offsets = params['offsets']
-
-    if displayname == 'generated':
-        stims = {'Generated': ([None,None,None,None],['blank', 'a', 'r', 'm'],[(0, 0, 0), (1, 1, 1), (2, 2, 2), (3, 3, 3)])}
-    else:
-        stims = {'SmallLetters': (['stim-02-item-04.png','stim-02-item-01.png','stim-02-item-02.png','stim-02-item-03.png'],['blank', 'a', 'r', 'a'],[(1, 0, 2, 0, 1)]),
-                 'LargeLetters': (['stim-03-item-04.png','stim-03-item-01.png','stim-03-item-02.png','stim-03-item-03.png'],['blank', 'a', 'r', 'a'],[(1, 0, 2, 0, 1)])}
-
-    trials = []
-    for name,details in stims.items():
-        fnames,conditions,combinations = details
-        if type(fnames[0]) == int:
-            unit_images = []
-            for freq in fnames:
-                unit_images.append(get_test_image(freq=freq,field_height=image_height,field_width=image_width))
-        else:
-            unit_images = load_images(dname='images/',fnames = fnames[1:],normalize=False)
-
-        stim_i = 0
-        for image_combination in combinations:
-            for flank_distance in flank_distances:
-                if flank_distance >= 0.0:
-                    blank_width = int(get_image_width_in_pixels(degrees=flank_distance,viewing_distance=viewing_distance,screen_pixel_size=screen_pixel_size))
-                    combination = image_combination
-                else:
-                    blank_width = unit_images[0].shape[1]
-                    list_combination = list(image_combination)
-                    list_combination[0] = 0
-                    list_combination[-1] = 0
-                    combination = tuple(list_combination)
-                blank_height = unit_images[0].shape[0]
-                blank_image = np.ones((blank_height,blank_width))*255
-                image = build_stimulus(unit_images=[blank_image]+unit_images,combinations=combination,image_height=image_height,image_width=image_width)
-                filename = name+'-'+'{:02d}'.format(stim_i)+'-'+str(flank_distance)+'.png'
-                save_image(image,fname=filename,unnormalize=True)
-
-                for offset in offsets:
-                    cond = [conditions[x] for x in combination]
-                    trial = list(flatten([name,offset,cond,flank_distance,stim_i,viewing_distance,screen_pixel_size,image_height,image_width,filename]))
-
-                    trials.append(trial)
-            stim_i = stim_i + 1
-
-    columns = ['name','offset','left','blank','middle','blank','right','flank_distance','condition','viewing_distance','screen_pixel_size','image_height','image_width','image']
-    df = pd.DataFrame(np.array(trials,dtype=np.object),columns=columns)
-    save_df(df,'conditions.xlsx','.')
-    return df
+from report import PelliReport
 
 # mark functions to profile with @profile
 # profile with: kernprof -l -v framework.py
 if __name__ == "__main__":
-    main(build_stimulus_func=build_stimulus,build_experiment_func=build_experiment)
-    
+    stim = ['02','03']
+    for i,name in enumerate(['SmallLetters','LargeLetters']):
+        pelli_params['name'] = name
+        pelli_params['expName'] = name
+        pelli_params['stimulus']['stim'] = stim[i]
+        trial_conditions = pelli_params['levels']
+        stimulus_params = pelli_params['stimulus']
+        nReps = pelli_params['experiment']['nTrialReps']
+        if name == 'SmallLetters':
+            pelli_params['model']['target_contrast'] = 0.005
+            pelli_params['model']['est_max'] = 0.01
+        else:
+            pelli_params['model']['target_contrast'] = 0.012
+            pelli_params['model']['est_max'] = 0.025
+        experiment = Experiment(pelli_params,PelliReport,
+                       [TrialRoutine(trial_conditions,nReps,
+                         #[PelliRoutine(pelli_params,
+                         [PelliRoutine(pelli_params,
+                           [PelliComponent(stimulus_params)])])])
+        experiment.run()
+    core.quit()

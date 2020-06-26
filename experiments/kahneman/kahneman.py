@@ -1,81 +1,155 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-=========================================================
-Experiment:Kahneman
-=========================================================
+TestDriver
 """
+import numpy as np  # whole numpy lib is available, prepend 'np.'
+import sys
+import os
+sys.path.append(os.path.realpath(os.path.join(os.getcwd(),'..','..')))
 
+from psychopy import logging,visual,core
+logging.console.setLevel(logging.CRITICAL)  # TURN OFF WARNINGS TO THE CONSOLE
+from psychopy.tools.coordinatetools import pol2cart
 
-import numpy as np
-from scipy.ndimage.interpolation import rotate
+from Contrast.model.newlibrary import Params,StimulusComponent,Experiment,TrialRoutine,StaircaseTrialRoutine,Routine
 
-from Contrast.framework import main
-from Contrast.library import get_image_width_in_pixels, set_at
-
-
-######## BEGIN: STIMULI #######################################################################
-def get_landolt_c(ndim=25,radius=9,thickness=1,angle=0.0,gap=1,gap_thickness=2):
-    x = np.arange(ndim) # x values
-    y = np.arange(ndim) # y values
-    xx, yy = np.meshgrid(x, y) # combine both vectors
-
-    center_x = x.shape[0]/2
-    center_y = y.shape[0]/2
-    dist = np.sqrt( (xx - center_x)**2 + (yy - center_y)**2 )
+foreground_color = [-1,-1,-1]
+background_color = [0.1,0.1,0.1]
+eccentricity = 0.0
+kahneman_params = Params(
+    name             = 'kahneman',
+    expName          = 'kahneman',
+    exp_num          = 1,
+    viewing_distance = 2300.0,
+    monitor          = 'testMonitor',
+    logfile          = 'kahneman.log',
+    window_color     = background_color,
+    cwd              = os.getcwd(),
+    exp_info         = {u'session': u'001', u'participant': u'default'},
+    target_identifier= ('flank_distance',-1/60.0),
+    levels = Params(
+        flank_distance = np.array([-1., 0.06, 0.12, 0.18, 0.24, 0.6, 1.2, 1.8, 2.4, 3., 5.4 ])/60,
+        offset = [0],
+        target_orientation = [0,90,180,270]), # degrees from noon orientation
+    experiment = Params(eccentricity= eccentricity,
+                  nTrialReps= 1),
+    stimulus   = Params(
+        eccentricity = eccentricity,
+        target_size = 0.0548,
+        gap_size = 0.01124,
+        line_width= 0.014),
+    model      = Params(eccentricities= [5], # in deg
+                        view_size= (1000,1000), # in pixels
+                        view_pos= (eccentricity,0), # center in degrees of visual angle
+                        est_max= 0.032,
+                        upper_limit= 0.85,                   
+                        lower_limit= 0.0))
     
-    outer_c = np.array(dist<radius,dtype=np.int)
-    inner_c = np.array(dist<radius-thickness,dtype=np.int)
-    c = outer_c - inner_c
+class KahnemanComponent(StimulusComponent):
+    def __init__(self, params={}, start=0, stop=1000000):
+        super(KahnemanComponent, self).__init__(params=params,start=start, stop=stop)
 
-    degrees = np.arctan2(np.array(yy-center_y,dtype=np.float),np.array(xx-center_x,dtype=np.float))*(180/np.pi)
-    dd = np.vstack((np.flipud(degrees[center_x:,:]),degrees[center_x:,:]))    
-    dd = rotate(dd,-(angle-90),reshape=False)
+        self.line_width = self.params['line_width']
+        self.gap_width= self.params['gap_size']
+        self.target_diameter= self.params['target_size']
+        self.eccentricity = self.params['eccentricity']
+        self.current_depth = 1.0
+        self.items = []
 
-    if gap == 1:
-        c[dd<gap_thickness*(ndim/radius)] = 0
-        
-    return c   
+    def get_target_gap_pos(self,flank_orientation=0,flank_distance=0,num_flank=0,target_orientation=0,gap=0,offset=0):
+        pos = pol2cart(-target_orientation+90, 0.5*self.target_diameter-0.5*self.line_width, units='deg')
+        pos = (pos[0]+self.eccentricity,pos[1])
+        return pos
     
-def build_stimulus(image_height=1000,image_width=1000,target_size=0.1,gap_size=0.1,flank_distance=3.0,viewing_distance=18.0,target_orientation=0,screen_pixel_size=0.282,**params):
-    gap_size = int(np.round(get_image_width_in_pixels(gap_size,viewing_distance=viewing_distance,screen_pixel_size=screen_pixel_size)))
-    flank_gap = int(np.round(get_image_width_in_pixels(flank_distance,viewing_distance=viewing_distance,screen_pixel_size=screen_pixel_size)))
-    target_size = int(np.round(get_image_width_in_pixels(target_size,viewing_distance=viewing_distance,screen_pixel_size=screen_pixel_size)))
+    def rect(self,width=0.4,height=2.0,color=[1,1,1],ori=0.0):
+        #self.current_depth = self.current_depth - 1.0
+        return visual.Rect(pos=(0,0),size=[width,height],ori=ori,
+                           lineColor=color,units='deg',depth=self.current_depth,
+                           fillColor=color,win=self.win)
 
-    if np.mod(target_size,2) == 1:  # if odd, make even
-        target_size = target_size + 1
+    def circle(self,width=1.0,height=1.0,color=[1,1,1]):
+        #self.current_depth = self.current_depth - 1
+        return visual.Polygon(
+            win=self.win, units='deg', 
+            edges=256, size=[width, height],
+            ori=0, pos=[self.eccentricity,0],
+            lineWidth=1, lineColor=color, lineColorSpace='rgb',
+            fillColor=color, fillColorSpace='rgb',
+            opacity=1.0, depth=self.current_depth, interpolate=True)
 
-    target = get_landolt_c(ndim=target_size,radius=target_size/2,thickness=gap_size,angle=target_orientation,gap_thickness=gap_size)
+    def create(self,win):
+        self.win = win
+        self.current_depth = 0
 
-    h_flank = np.ones((gap_size,target.shape[1]))
-    v_flank = np.ones((target.shape[1],gap_size))
+        self.flanks = []
+        flank_left = self.rect(width=self.line_width,height=self.target_diameter,color=foreground_color)
+        flank_right = self.rect(width=self.line_width,height=self.target_diameter,color=foreground_color)
+        flank_top = self.rect(width=self.line_width,height=self.target_diameter,color=foreground_color,ori=90.0)
+        flank_bottom = self.rect(width=self.line_width,height=self.target_diameter,color=foreground_color,ori=90.0)
+        self.flanks.extend([flank_left,flank_right,flank_top,flank_bottom])
+        self.items.extend(self.flanks)
 
-    center_x,center_y = image_height/2,image_width/2
-    image = np.zeros((image_height,image_width))
+        self.target_outer = self.circle(width=self.target_diameter,height=self.target_diameter,color=foreground_color)
+        self.target_inner = self.circle(width=self.target_diameter-2*self.line_width,height=self.target_diameter-2*self.line_width,color=background_color)
+        self.target_gap = self.rect(color=background_color)
+        self.items.extend([self.target_outer,self.target_inner,self.target_gap])
 
-    target_x,target_y = center_x-target.shape[0]/2,center_y-target.shape[1]/2
-    # x is row, y is col    
-    image = set_at(image,target,target_x,target_y)
+    def update(self,trialparams={},loopstate={}):
+        flank_distance = trialparams['flank_distance']
+        target_orientation = trialparams['target_orientation']
 
-    if flank_distance >= 0:
-        # right flank
-        image = set_at(image,v_flank,target_x,center_y+target_size/2+flank_gap)
-        # left flank
-        image = set_at(image,v_flank,target_x,center_y-(target_size/2+flank_gap+h_flank.shape[0]))
-        # top flank
-        image = set_at(image,h_flank,center_x-(target_size/2+flank_gap+h_flank.shape[0]),target_y)
-        # bottom flank
-        image = set_at(image,h_flank,center_x+target_size/2+flank_gap,target_y)
+        #offset = 1.0
+        offset = self.target_diameter/2.0+self.line_width
+        flank_left,flank_right,flank_top,flank_bottom = self.flanks
+        if flank_distance > 0:
+            flank_left.setPos((self.eccentricity-flank_distance-offset,0))
+            flank_right.setPos((self.eccentricity+flank_distance+offset,0))
+            flank_top.setPos((self.eccentricity,-flank_distance-offset))
+            flank_bottom.setPos((self.eccentricity,flank_distance+offset))
+            flank_left.setOpacity(1)
+            flank_right.setOpacity(1)
+            flank_top.setOpacity(1)
+            flank_bottom.setOpacity(1)
+        else:
+            flank_left.setOpacity(0)
+            flank_right.setOpacity(0)
+            flank_top.setOpacity(0)
+            flank_bottom.setOpacity(0)
+            
+        self.target_gap.setPos(self.get_target_gap_pos(**trialparams))
+        self.target_gap.setSize((self.gap_width, 1.2*self.line_width))
+        self.target_gap.setOri(target_orientation)
 
-    image = np.abs(image-1.0)  # reverse the image to match the paper
-    image2 = image*0.88   # contrast foreground to background is 88%
-    return image2
+import os, glob, os.path
 
-######## END: STIMULI #######################################################################
+def sorted_ls(path):
+    mtime = lambda f: os.stat(os.path.join(path, f)).st_mtime
+    return list(sorted(os.listdir(path), key=mtime))[::-1]
+   
+def reportmain(reportclass=None,filenames=None,only_most_recent=False):
+    if filenames is None:
+        filenames = sorted_ls('data')
+        filenames = ['data'+ os.sep + fname for fname in filenames]
 
+    r = reportclass(filenames=filenames,only_most_recent=only_most_recent)
+    r.generate()
 
+from report import KahnemanReport
+    
 # mark functions to profile with @profile
 # profile with: kernprof -l -v framework.py
 if __name__ == "__main__":
-    main(build_stimulus_func=build_stimulus)
-
-
+    display_report = False
+    trial_conditions = kahneman_params['levels']
+    stimulus_params = kahneman_params['stimulus']
+    nReps = kahneman_params['experiment']['nTrialReps']
+    experiment = Experiment(kahneman_params,KahnemanReport,
+                   [TrialRoutine(trial_conditions,nReps,
+                     #[KahnemanRoutine(kahneman_params,
+                     [Routine(
+                       [KahnemanComponent(stimulus_params)])])])
+    
+    experiment.run()
+    core.quit()
+    

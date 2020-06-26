@@ -1,4 +1,4 @@
-.. Framework documentation master file, created by
+.. Contrast documentation master file, created by
    sphinx-quickstart on Wed Jan  2 15:26:24 2019.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
@@ -8,56 +8,38 @@ Contrast API Reference
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
 
-.. automodule:: framework
+.. automodule:: Contrast
     :members:
     :undoc-members:
       
-.. automodule:: framework.framework
+.. automodule:: Contrast.model.model
    :members:
    :undoc-members:
       
-.. automodule:: framework.library
-   :members:
-   :undoc-members:
-      
-.. automodule:: framework.stimulus
+.. automodule:: Contrast.model.library
    :members:
    :undoc-members:
 
-.. automodule:: framework.plotting
+.. automodule:: Contrast.model.newlibrary
    :members:
    :undoc-members:
 
-.. automodule:: framework.experiments.library
+.. automodule:: Contrast.model.plotting
    :members:
    :undoc-members:
 
-.. automodule:: framework.experiments.bex.bex
+.. automodule:: Contrast.model.report
    :members:
    :undoc-members:
 
-.. automodule:: framework.experiments.herzog.herzog
+.. automodule:: Contrast.model.stimulus
    :members:
    :undoc-members:
 
-.. automodule:: framework.experiments.kahneman.kahneman
+.. automodule:: Contrast.experiments.herzog
    :members:
    :undoc-members:
 
-.. automodule:: framework.experiments.pachai.pachai
-   :members:
-   :undoc-members:
-
-.. automodule:: framework.experiments.pelli.pelli
-   :members:
-   :undoc-members:
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

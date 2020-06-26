@@ -1,0 +1,475 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+% Created 2018-04-18 Wed 14:41
+\usepackage{fixltx2e}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\tolerance=1000
+\usepackage{tikz}
+\usepackage{parskip}
+\usepackage{xfrac}
+\usepackage{fixltx2e}
+\usepackage{paralist}
+\let\itemize\compactitem
+\let\description\compactdesc
+\let\enumerate\compactenum
+\newcommand{\argmin}{\operatornamewithlimits{arg\ min}}
+\usepackage{tikz-cd}
+\usepackage{mathrsfs}
+\author{Antonio M. Rodriguez and Richard H. Granger}
+\date{\today}
+\title{Herzog Experiment}
+\end_preamble
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding utf8
+\fontencoding T1
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_bookmarks false
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks false
+\pdf_backref section
+\pdf_pdfusetitle false
+\pdf_quoted_options "pdfcreator={Emacs 24.5.1 (Org mode 8.2.10)}"
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+maketitle
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+*ROUGH DRAFT - DO NOT CIRCULATE*
+\end_layout
+
+\begin_layout Section*
+III.
+ Five representative crowding experiments
+\end_layout
+
+\begin_layout Subsection*
+D) Herzog et al., 2015 (2)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+From multiple reported findings, we focus on a subset in which the target
+ is a pair of slightly unaligned bars (a vernier), flanked by varying numbers
+ of bars
+\strikeout on
+, or of boxes
+\strikeout default
+ (Figure 8), which resulted in a seemingly paradoxical finding: although
+ adding flankers around a target object did cause crowding, i.e., impaired
+ recognition of the target object (the vernier), the further addition of
+ more flankers surprisingly ameliorated that effect.
+ An increased number of flanking objects (bars 
+\strikeout on
+or boxes
+\strikeout default
+) caused less crowding than did fewer flankers.
+ In other words, the flanking effect was non-monotonic: a few flankers impaired
+ recognition, but more flankers reduced the impairment.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/tony/src/python/Contrast/future/herzog/report/viewHerzog2012_expnum=1_items=0_jitter=0_flank_target_height_ratio=0.5_num_flank=0_offset=16.66_orientation=01.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:herzog-stim"
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Stimuli for the Herzog experiment.
+ A vernier target either left or right orientation (left shown) is optionally
+ flanked by vertical lines.
+ The vernier target consists of an upper and lower vertical line centered
+ at 3.88 degrees from the fixation.
+ The subject's task is to identify the orientation of the vernier target.
+ The flank distance is the distance between the inner most vertical line
+ and the vernier target in degrees of visual angle.
+ As in (Manassi, 2012), two vertical bars appear above and below the vernier
+ target to help locate the target.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Stimulus configurations
+\end_layout
+
+\begin_layout Standard
+Stimuli description adapted from (Manassi, 2012):
+\end_layout
+
+\begin_layout Standard
+The vernier stimulus consisted of two vertical 40' (arcmin) long lines separated
+ by a vertical gap of 4'.
+ Flanker configurations were centered on the vernier stimulus and were symmetric
+al in the horizontal dimension.
+ Each configuration was presented at an eccentricity of 
+\begin_inset Formula $3.88^{\circ}$
+\end_inset
+
+ to the right of a fixation cross (6' diameter).
+ Eccentricity refers to the center of the target location.
+ The model's retina was centered on the fixation cross during the trial.
+ In order to replicate (Manassi, 2012) stimuli, we added two vertical lines
+ (40' long), 100' above and below the center of the vernier.
+ Vernier and flankers were presented simultaneously for 150 ms.
+\end_layout
+
+\begin_layout Standard
+The model calculated the contrast value of the stimuli and the decision
+ function percent correct response similarly to previous experiments.
+ The model responded by generating a random response in proportion to the
+ percentage correct from the decision function value.
+ An adaptive staircase procedure was used to determine the threshold of
+ 75% correct response.
+ The starting offset for the staircase was 16.66'.
+ 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+The possible gap distance spacing for the staircase procedure were 16.66,
+ 19.04, 21.42, 23.826.18, 28.56, 30.94, and 33.32
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+.
+ In every block of 80 trials, the number of left and right offsets was balanced.
+\end_layout
+
+\begin_layout Standard
+An unflanked vernier was presented alone or was flanked by arrays of 1,
+ 2, 4, or 8 vertical lines presented on each side (Figure 0.1).
+ The directly neighboring lines were always placed at a horizontal distance
+ of 23.33' from the vernier target.
+ Interflanker spacing was also 23.33'.
+ Three different flanker lengths were used: half (40'), equal (84'), or
+ twice (168') the length of the vernier target.
+ We will refer to these conditions as short, equal-length, long.
+ Each condition was presented in separate blocks of 80 trials.
+ All conditions were measured twice (i.e., 160 trials) and randomized individually.
+\end_layout
+
+\begin_layout Subsubsection*
+Statistics
+\end_layout
+
+\begin_layout Standard
+We calculated threshold elevation relative to the target alone stimuli by
+ subtraction.
+ We then performed a regression analysis on the threshold elevation, regressing
+ threshold elevation against the log of the number of flankers.
+ For each subject, this analysis yielded a slope and intercept of the regression
+ line.
+ 
+\end_layout
+
+\begin_layout Subsection*
+Results
+\end_layout
+
+\begin_layout Standard
+Results are plotted as threshold elevation relative to the unflanked vernier
+ condition (Figure 0.2, rightmost column).
+ When the number of short flankers increased, performance improved (slope
+ = 0.006923, p = 0.026043, Figure 0.2, top right).
+ With equal-length flankers, performance remained constant (slope = 0.010764,
+ p = 0.021590, Figure 0.2, middle right).
+ With the long flankers, we found a trend for facilitation (slope = 0.016519,
+ p = 0.017650 , Figure 0.2, bottom right).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/tony/src/python/Contrast/future/herzog/report/decision-Herzog-2012-Figure-1a.pdf
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/tony/src/python/Contrast/future/herzog/report/plot-contrast-Herzog-2012-Figure-1a.pdf
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/tony/src/python/Contrast/future/herzog/report/plot-Herzog-2012-Figure-1a.pdf
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/tony/src/python/Contrast/future/herzog/report/decision-Herzog-2012-Figure-1b.pdf
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/tony/src/python/Contrast/future/herzog/report/plot-contrast-Herzog-2012-Figure-1b.pdf
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/tony/src/python/Contrast/future/herzog/report/plot-Herzog-2012-Figure-1b.pdf
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /home/tony/src/python/Contrast/future/herzog/report/decision-Herzog-2012-Figure-1c.pdf
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/tony/src/python/Contrast/future/herzog/report/plot-contrast-Herzog-2012-Figure-1c.pdf
+	width 30text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/tony/src/python/Contrast/future/herzog/report/plot-Herzog-2012-Figure-1c.pdf
+	width 30text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The leftmost column of graphs shows the decision function for half, equal
+ and twice length flankers, respectively.
+ The middle column of graphs shows the GRMS contrast as a function of the
+ number flankers.
+ The rightmost column of graphs shows the threshold elevation as a function
+ the number of flankers.
+ The red line in the graphs is the linear regression slope.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+% Emacs 24.5.1 (Org mode 8.2.10)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Bibliography
+\end_layout
+
+\begin_layout Standard
+Manassi, M., Sayim, B., & Herzog, M.
+ H.
+ (2012).
+ Grouping, pooling, and when bigger is better in visual crowding.
+ Journal of Vision, 12(10):13, http://www.journalofvision.org/content/12/10/13,
+ doi:10.1167/12.10.13.
+ [PubMed] [Article]
+\end_layout
+
+\end_body
+\end_document
