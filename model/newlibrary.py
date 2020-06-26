@@ -605,8 +605,8 @@ class Experiment(object):
         return params
     
     def __init__(self,params=None,reportobj=None,subroutines=[]):
-        logging.LogFile(params['logfile'],level=logging.INFO,filemode='w')
-        #logging.LogFile(level=logging.ERROR)
+        logging.LogFile(params['cwd'] + os.sep + params['logfile'],level=logging.INFO,filemode='w')
+        logging.LogFile(level=logging.ERROR)
 
         logging.info('Using Python '+sys.version)
 

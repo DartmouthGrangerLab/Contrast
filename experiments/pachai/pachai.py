@@ -20,7 +20,7 @@ background_color = [0,0,0]
 
 pachai_params = Params(
     name             = 'pachai',
-    expName          = 'pachai',
+    expName          = 'pachai', # expname for filename 
     exp_num          = 1,
     viewing_distance = 58,
     monitor          = 'testMonitor',
@@ -37,7 +37,7 @@ pachai_params = Params(
     experiment = Params(eccentricity= eccentricity,
                         nTrialReps= 1),
     stimulus   = Params(line_width= 0.4,
-                        gap_width= 0.4*2,
+                        gap_width= 0.4*3,  # contrast changes with gap size, we need to enlarge the gap to see a large enough difference between gap and no gap with current monitor settings and viewing distance
                         target_diameter= 2.0,
                         flank_height= 10.0),
     model      = Params(eccentricities= [eccentricity], # in deg
@@ -177,12 +177,10 @@ if __name__ == "__main__":
         if num_flank == 1:
             pachai_params['expName'] = 'pachai:1'
             pachai_params['model']['est_max'] = 0.03
-            #pachai_params['model']['est_max'] = 0.031622
             pachai_params['levels']['num_flank'] = [1]
         else:
             pachai_params['expName'] = 'pachai:5'
             pachai_params['model']['est_max'] = 0.08
-            #pachai_params['model']['est_max'] = 0.077658
             pachai_params['levels']['num_flank'] = [5]
         experiment = Experiment(pachai_params,PachaiReport,
                        [TrialRoutine(trial_conditions,nReps,
