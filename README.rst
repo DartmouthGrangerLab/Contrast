@@ -90,6 +90,12 @@ Results will be in the report directory::
   Herzog-2012-Figure-1d.pdf
   $ 
 
+To run the Herzog experiment with a new est_max value one can edit the parameter directly in the source code or one can issue the following command with a command-line option::
+  
+  $ cd experiments/herzog
+  $ ./herzog.py -model est_max=0.1
+
+  
 All the parameters are listed at the top of each experiment file. For the Herzog
 experiment the parameters are in herzog.py:
  
@@ -158,6 +164,7 @@ To recreate the stimuli for Herzog experiment (note: various windows will appear
   
   $ cd experiments/herzog
   $ ./herzog.py -genstim
+  
   
 Running the Kahneman experiment:
 -------
@@ -248,7 +255,6 @@ experiment the parameters are in pachai.py:
     eccentricity = 10.0
     #background_color = [-1,-1,-1]
     background_color = [0,0,0]
-    angular_gap = True
 
     pachai_params = Params(
 	name             = 'pachai',
@@ -269,7 +275,7 @@ experiment the parameters are in pachai.py:
 	experiment = Params(eccentricity= eccentricity,
 			    nTrialReps= 1),
 	stimulus   = Params(line_width= 0.4,
-			    gap_width= 0.4*3,
+			    gap_width= 1.2,
 			    target_diameter= 2.0,
 			    flank_height= 10.0),
 	model      = Params(eccentricities= [eccentricity], # in deg
