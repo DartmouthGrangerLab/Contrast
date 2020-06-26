@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 """
 =========================================================
-Module: Model
+Model
 =========================================================
 
-Class for building Jacobian operators and processing an image.
+Contains Model Class for building Jacobian operators and processing an image.
 
 """
 from past.builtins import basestring
@@ -50,6 +50,20 @@ np.set_printoptions(suppress=True)
 #########################################
 
 def decision_func(contrast,target_contrast=0,decision_sigma=0,decision_K=0,upper_limit=0,lower_limit=0,return_all=False):
+    """Decision function that maps contrast values to a proportion of correct response.
+
+    :Parameters:
+        contrast : a numpy array or single contrast value
+        target_contrast : the contrast value of the target_alone, or mu_t
+        decision_sigma : the standard deviation of the target_alone, or sigma_tau
+        decision_K : the value K_phi, so sigma_phi = K_phi*sigma_tau
+        upper_limit : the upper limit of proportion correct resp e.g. 0.85 
+        lower_limit : the lower limit of proportion correct resp e.g. 0.0
+        return_all : if True, returns result and foreground and background Jacobians
+
+    :returns: a numpy array of proportion correct responses, one for each contrast value in the contrast parameter.
+
+    """        
     J_f = np.exp(-(np.square(contrast-target_contrast)/(2.0*np.square(decision_sigma))))
     J_b = np.exp(-(np.square(contrast-target_contrast)/(2.0*np.square(decision_sigma*decision_K))))
     result = (J_f-J_b+1)*(upper_limit-lower_limit)+lower_limit
@@ -59,16 +73,10 @@ def decision_func(contrast,target_contrast=0,decision_sigma=0,decision_K=0,upper
         return result
 
 class Model(object):
-    """Documentation for model
+    """Class for building Jacobians and processing an image
 
-    More documentation
 
-    :Parameters:
-        visible : **True** or False
-            documentation on parameter
-        newPos : **None** or [x,y]
-            documentation on parameter
-    """
+    """        
 
     def __init__(self,
                  eccentricities=[3.88],

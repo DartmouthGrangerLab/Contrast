@@ -26,14 +26,6 @@ from Contrast.model.plotting import plot_figure
 
 class Report(object):
     """Documentation for Report
-
-    More documentation
-
-    :Parameters:
-        visible : **True** or False
-            documentation on parameter
-        newPos : **None** or [x,y]
-            documentation on parameter
     """
 
     def __init__(self,

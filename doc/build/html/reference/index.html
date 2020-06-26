@@ -45,30 +45,13 @@
 <h1>Contrast API Reference<a class="headerlink" href="#contrast-api-reference" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
-<span class="target" id="module-Contrast"></span><span class="target" id="module-Contrast.model.model"></span><div class="section" id="module-model">
-<h2>Module: Model<a class="headerlink" href="#module-model" title="Permalink to this headline">¶</a></h2>
-<p>Class for building Jacobian operators and processing an image.</p>
+<span class="target" id="module-Contrast"></span><span class="target" id="module-Contrast.model.model"></span><div class="section" id="model">
+<h2>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
+<p>Contains Model Class for building Jacobian operators and processing an image.</p>
 <dl class="class">
 <dt id="Contrast.model.model.Model">
 <em class="property">class </em><code class="descclassname">Contrast.model.model.</code><code class="descname">Model</code><span class="sig-paren">(</span><em>eccentricities=[3.88], viewing_distance=29.5, screen_pixel_size=0.282, view_size=(350, 350), view_pos=(0, 0), target_contrast=0.0, est_max=0.01, K=5.0, upper_limit=0.85, lower_limit=0.0, saveimages=False, cwd='', name='', logging=None, **params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/model.html#Model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.model.Model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Documentation for model</p>
-<p>More documentation</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt>visible <span class="classifier-delimiter">:</span> <span class="classifier"><strong>True</strong> or False</span></dt>
-<dd><p class="first last">documentation on parameter</p>
-</dd>
-<dt>newPos <span class="classifier-delimiter">:</span> <span class="classifier"><strong>None</strong> or [x,y]</span></dt>
-<dd><p class="first last">documentation on parameter</p>
-</dd>
-</dl>
-</td>
-</tr>
-</tbody>
-</table>
+<dd><p>Class for building Jacobians and processing an image</p>
 <dl class="method">
 <dt id="Contrast.model.model.Model.build_operators">
 <code class="descname">build_operators</code><span class="sig-paren">(</span><em>eccentricities</em>, <em>viewing_distance=22.0</em>, <em>screen_pixel_size=0.282</em>, <em>field_height=100</em>, <em>field_width=100</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/model.html#Model.build_operators"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.model.Model.build_operators" title="Permalink to this definition">¶</a></dt>
@@ -110,7 +93,24 @@
 <dl class="function">
 <dt id="Contrast.model.model.decision_func">
 <code class="descclassname">Contrast.model.model.</code><code class="descname">decision_func</code><span class="sig-paren">(</span><em>contrast</em>, <em>target_contrast=0</em>, <em>decision_sigma=0</em>, <em>decision_K=0</em>, <em>upper_limit=0</em>, <em>lower_limit=0</em>, <em>return_all=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/model.html#decision_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.model.decision_func" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Decision function that maps contrast values to a proportion of correct response.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body">contrast : a numpy array or single contrast value
+target_contrast : the contrast value of the target_alone, or mu_t
+decision_sigma : the standard deviation of the target_alone, or sigma_tau
+decision_K : the value K_phi, so sigma_phi = K_phi*sigma_tau
+upper_limit : the upper limit of proportion correct resp e.g. 0.85 
+lower_limit : the lower limit of proportion correct resp e.g. 0.0
+return_all : if True, returns result and foreground and background Jacobians</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a numpy array of proportion correct responses, one for each contrast value in the contrast parameter.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </div>
 <span class="target" id="module-Contrast.model.library"></span><div class="section" id="library">
@@ -201,32 +201,14 @@ image_width is size of entire in pixels</p>
 <dd></dd></dl>
 
 </div>
-<span class="target" id="module-Contrast.model.newlibrary"></span><p>TestDriver
+<span class="target" id="module-Contrast.model.newlibrary"></span><div class="section" id="id1">
+<h2>Library<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>NewLibrary for Experiment Components
 Must run with Python 3.7 or greater</p>
 <dl class="class">
 <dt id="Contrast.model.newlibrary.Experiment">
 <em class="property">class </em><code class="descclassname">Contrast.model.newlibrary.</code><code class="descname">Experiment</code><span class="sig-paren">(</span><em>params=None</em>, <em>reportobj=None</em>, <em>subroutines=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Experiment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Experiment" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Contains settings and routines</dt>
-<dd>call like this: ./herzog.py -model test=1,test2=’0’</dd>
-</dl>
-<p>More documentation</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt>visible <span class="classifier-delimiter">:</span> <span class="classifier"><strong>True</strong> or False</span></dt>
-<dd><p class="first last">documentation on parameter</p>
-</dd>
-<dt>newPos <span class="classifier-delimiter">:</span> <span class="classifier"><strong>None</strong> or [x,y]</span></dt>
-<dd><p class="first last">documentation on parameter</p>
-</dd>
-</dl>
-</td>
-</tr>
-</tbody>
-</table>
+<dd><p>Contains settings and routines</p>
 <dl class="method">
 <dt id="Contrast.model.newlibrary.Experiment.displayreport">
 <code class="descname">displayreport</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Experiment.displayreport"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Experiment.displayreport" title="Permalink to this definition">¶</a></dt>
@@ -252,24 +234,7 @@ Must run with Python 3.7 or greater</p>
 <dl class="class">
 <dt id="Contrast.model.newlibrary.ExperimentConditions">
 <em class="property">class </em><code class="descclassname">Contrast.model.newlibrary.</code><code class="descname">ExperimentConditions</code><span class="sig-paren">(</span><em>levels=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#ExperimentConditions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.ExperimentConditions" title="Permalink to this definition">¶</a></dt>
-<dd><p>More documentation</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt>visible <span class="classifier-delimiter">:</span> <span class="classifier"><strong>True</strong> or False</span></dt>
-<dd><p class="first last">documentation on parameter</p>
-</dd>
-<dt>newPos <span class="classifier-delimiter">:</span> <span class="classifier"><strong>None</strong> or [x,y]</span></dt>
-<dd><p class="first last">documentation on parameter</p>
-</dd>
-</dl>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="class">
 <dt id="Contrast.model.newlibrary.ImageComponent">
@@ -319,29 +284,10 @@ Must run with Python 3.7 or greater</p>
 <dl class="class">
 <dt id="Contrast.model.newlibrary.Routine">
 <em class="property">class </em><code class="descclassname">Contrast.model.newlibrary.</code><code class="descname">Routine</code><span class="sig-paren">(</span><em>components=[]</em>, <em>timeout=10</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Routine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Routine" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Contains only StimulusComponents</dt>
-<dd>Represents a SCREEN of different stimuli
+<dd><p>Contains only StimulusComponents
+Represents a SCREEN of different stimuli
 Is associated with a filename for saving the screen
-Is associated with a keyboard response</dd>
-</dl>
-<p>More documentation</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt>visible <span class="classifier-delimiter">:</span> <span class="classifier"><strong>True</strong> or False</span></dt>
-<dd><p class="first last">documentation on parameter</p>
-</dd>
-<dt>newPos <span class="classifier-delimiter">:</span> <span class="classifier"><strong>None</strong> or [x,y]</span></dt>
-<dd><p class="first last">documentation on parameter</p>
-</dd>
-</dl>
-</td>
-</tr>
-</tbody>
-</table>
+Is associated with a keyboard response</p>
 <dl class="method">
 <dt id="Contrast.model.newlibrary.Routine.addComponent">
 <code class="descname">addComponent</code><span class="sig-paren">(</span><em>component</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#Routine.addComponent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.Routine.addComponent" title="Permalink to this definition">¶</a></dt>
@@ -393,23 +339,6 @@ Is associated with a keyboard response</dd>
 <dt id="Contrast.model.newlibrary.StaircaseTrialRoutine">
 <em class="property">class </em><code class="descclassname">Contrast.model.newlibrary.</code><code class="descname">StaircaseTrialRoutine</code><span class="sig-paren">(</span><em>stair_params=[]</em>, <em>level_values=None</em>, <em>subroutines=[]</em>, <em>saveTrials=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#StaircaseTrialRoutine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.StaircaseTrialRoutine" title="Permalink to this definition">¶</a></dt>
 <dd><p>Can contain a sequence of either Routines StairCaseTrialRoutines or TrialRoutine</p>
-<p>More documentation</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt>visible <span class="classifier-delimiter">:</span> <span class="classifier"><strong>True</strong> or False</span></dt>
-<dd><p class="first last">documentation on parameter</p>
-</dd>
-<dt>newPos <span class="classifier-delimiter">:</span> <span class="classifier"><strong>None</strong> or [x,y]</span></dt>
-<dd><p class="first last">documentation on parameter</p>
-</dd>
-</dl>
-</td>
-</tr>
-</tbody>
-</table>
 <dl class="method">
 <dt id="Contrast.model.newlibrary.StaircaseTrialRoutine.create">
 <code class="descname">create</code><span class="sig-paren">(</span><em>win</em>, <em>exp_handler=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#StaircaseTrialRoutine.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.StaircaseTrialRoutine.create" title="Permalink to this definition">¶</a></dt>
@@ -435,24 +364,8 @@ Is associated with a keyboard response</dd>
 <dl class="class">
 <dt id="Contrast.model.newlibrary.StimulusComponent">
 <em class="property">class </em><code class="descclassname">Contrast.model.newlibrary.</code><code class="descname">StimulusComponent</code><span class="sig-paren">(</span><em>start=0</em>, <em>stop=1000000</em>, <em>name=None</em>, <em>params={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#StimulusComponent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.StimulusComponent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Documentation for model</p>
-<p>More documentation</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt>visible <span class="classifier-delimiter">:</span> <span class="classifier"><strong>True</strong> or False</span></dt>
-<dd><p class="first last">documentation on parameter</p>
-</dd>
-<dt>newPos <span class="classifier-delimiter">:</span> <span class="classifier"><strong>None</strong> or [x,y]</span></dt>
-<dd><p class="first last">documentation on parameter</p>
-</dd>
-</dl>
-</td>
-</tr>
-</tbody>
-</table>
+<dd><p>Implements a stimulus that allows for a human subject response.
+Contains Sounds, Images, or some other stimulus.</p>
 <dl class="method">
 <dt id="Contrast.model.newlibrary.StimulusComponent.create">
 <code class="descname">create</code><span class="sig-paren">(</span><em>win</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#StimulusComponent.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.StimulusComponent.create" title="Permalink to this definition">¶</a></dt>
@@ -489,23 +402,6 @@ Is associated with a keyboard response</dd>
 <dt id="Contrast.model.newlibrary.TrialRoutine">
 <em class="property">class </em><code class="descclassname">Contrast.model.newlibrary.</code><code class="descname">TrialRoutine</code><span class="sig-paren">(</span><em>conditions=[]</em>, <em>nReps=1</em>, <em>subroutines=[]</em>, <em>saveTrials=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#TrialRoutine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.TrialRoutine" title="Permalink to this definition">¶</a></dt>
 <dd><p>Can contain a sequence of either Routines StairCaseTrialRoutines or TrialRoutine</p>
-<p>More documentation</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt>visible <span class="classifier-delimiter">:</span> <span class="classifier"><strong>True</strong> or False</span></dt>
-<dd><p class="first last">documentation on parameter</p>
-</dd>
-<dt>newPos <span class="classifier-delimiter">:</span> <span class="classifier"><strong>None</strong> or [x,y]</span></dt>
-<dd><p class="first last">documentation on parameter</p>
-</dd>
-</dl>
-</td>
-</tr>
-</tbody>
-</table>
 <dl class="method">
 <dt id="Contrast.model.newlibrary.TrialRoutine.create">
 <code class="descname">create</code><span class="sig-paren">(</span><em>win</em>, <em>exp_handler=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#TrialRoutine.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.TrialRoutine.create" title="Permalink to this definition">¶</a></dt>
@@ -533,6 +429,7 @@ Is associated with a keyboard response</dd>
 <code class="descclassname">Contrast.model.newlibrary.</code><code class="descname">print_df</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/newlibrary.html#print_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.newlibrary.print_df" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+</div>
 <span class="target" id="module-Contrast.model.plotting"></span><div class="section" id="plotting-library">
 <h2>Plotting Library<a class="headerlink" href="#plotting-library" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -548,23 +445,6 @@ Is associated with a keyboard response</dd>
 <dt id="Contrast.model.report.Report">
 <em class="property">class </em><code class="descclassname">Contrast.model.report.</code><code class="descname">Report</code><span class="sig-paren">(</span><em>filenames=[]</em>, <em>only_most_recent=False</em>, <em>contrast_results=0</em>, <em>dirname=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/report.html#Report"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.report.Report" title="Permalink to this definition">¶</a></dt>
 <dd><p>Documentation for Report</p>
-<p>More documentation</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt>visible <span class="classifier-delimiter">:</span> <span class="classifier"><strong>True</strong> or False</span></dt>
-<dd><p class="first last">documentation on parameter</p>
-</dd>
-<dt>newPos <span class="classifier-delimiter">:</span> <span class="classifier"><strong>None</strong> or [x,y]</span></dt>
-<dd><p class="first last">documentation on parameter</p>
-</dd>
-</dl>
-</td>
-</tr>
-</tbody>
-</table>
 <dl class="method">
 <dt id="Contrast.model.report.Report.generate">
 <code class="descname">generate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Contrast/model/report.html#Report.generate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Contrast.model.report.Report.generate" title="Permalink to this definition">¶</a></dt>
@@ -632,8 +512,9 @@ Is associated with a keyboard response</dd>
   <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Contrast API Reference</a><ul>
-<li><a class="reference internal" href="#module-model">Module: Model</a></li>
+<li><a class="reference internal" href="#model">Model</a></li>
 <li><a class="reference internal" href="#library">Library</a></li>
+<li><a class="reference internal" href="#id1">Library</a></li>
 <li><a class="reference internal" href="#plotting-library">Plotting Library</a></li>
 <li><a class="reference internal" href="#report">Report</a></li>
 <li><a class="reference internal" href="#stimulus-library">Stimulus Library</a></li>

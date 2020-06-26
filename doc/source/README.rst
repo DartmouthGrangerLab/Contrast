@@ -90,6 +90,12 @@ Results will be in the report directory::
   Herzog-2012-Figure-1d.pdf
   $ 
 
+To run the Herzog experiment with a new est_max value one can edit the parameter directly in the source code or one can issue the following command with a command-line option::
+  
+  $ cd experiments/herzog
+  $ ./herzog.py -model est_max=0.1
+
+  
 All the parameters are listed at the top of each experiment file. For the Herzog
 experiment the parameters are in herzog.py:
  
@@ -158,6 +164,7 @@ To recreate the stimuli for Herzog experiment (note: various windows will appear
   
   $ cd experiments/herzog
   $ ./herzog.py -genstim
+  
   
 Running the Kahneman experiment:
 -------

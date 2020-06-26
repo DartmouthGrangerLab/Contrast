@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-TestDriver
+=========================================================
+Library
+=========================================================
+
+NewLibrary for Experiment Components
 Must run with Python 3.7 or greater
 """
 from psychopy import visual, core, data, event, logging, clock, monitors
@@ -69,15 +73,9 @@ class Params(dict):
         return result
 
 class StimulusComponent(object):
-    """Documentation for model
+    """Implements a stimulus that allows for a human subject response.
+       Contains Sounds, Images, or some other stimulus.
 
-    More documentation
-
-    :Parameters:
-        visible : **True** or False
-            documentation on parameter
-        newPos : **None** or [x,y]
-            documentation on parameter
     """
 
     def __init__(self, start=0, stop=1000000, name=None,params={}):
@@ -172,14 +170,6 @@ class Routine(object):
        Represents a SCREEN of different stimuli
        Is associated with a filename for saving the screen
        Is associated with a keyboard response
-
-    More documentation
-
-    :Parameters:
-        visible : **True** or False
-            documentation on parameter
-        newPos : **None** or [x,y]
-            documentation on parameter
     """
 
     def __init__(self,components=[],timeout=10):
@@ -373,14 +363,6 @@ class Routine(object):
 
 class ExperimentConditions(object):
     """ExperimentConditions
-
-    More documentation
-
-    :Parameters:
-        visible : **True** or False
-            documentation on parameter
-        newPos : **None** or [x,y]
-            documentation on parameter
     """
 
     def __init__(self,levels=[]):
@@ -390,14 +372,6 @@ class ExperimentConditions(object):
 
 class TrialRoutine(object):
     """Can contain a sequence of either Routines StairCaseTrialRoutines or TrialRoutine
-
-    More documentation
-
-    :Parameters:
-        visible : **True** or False
-            documentation on parameter
-        newPos : **None** or [x,y]
-            documentation on parameter
     """
 
     def __init__(self,conditions=[],nReps=1,subroutines=[],saveTrials=True):
@@ -468,14 +442,6 @@ class TrialRoutine(object):
 
 class StaircaseTrialRoutine(object):
     """ Can contain a sequence of either Routines StairCaseTrialRoutines or TrialRoutine
-
-    More documentation
-
-    :Parameters:
-        visible : **True** or False
-            documentation on parameter
-        newPos : **None** or [x,y]
-            documentation on parameter
     """
 
     def __init__(self,stair_params=[],level_values=None,subroutines=[],saveTrials=False):
@@ -573,14 +539,6 @@ class StaircaseTrialRoutine(object):
             
 class Experiment(object):
     """Contains settings and routines
-     call like this: ./herzog.py -model test=1,test2=\'0\' 
-    More documentation
-
-    :Parameters:
-        visible : **True** or False
-            documentation on parameter
-        newPos : **None** or [x,y]
-            documentation on parameter
     """
 
     def update_params(self,args,params):

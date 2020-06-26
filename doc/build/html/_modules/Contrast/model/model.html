@@ -43,10 +43,10 @@
 <span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">=========================================================</span>
-<span class="sd">Module: Model</span>
+<span class="sd">Model</span>
 <span class="sd">=========================================================</span>
 
-<span class="sd">Class for building Jacobian operators and processing an image.</span>
+<span class="sd">Contains Model Class for building Jacobian operators and processing an image.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">past.builtins</span> <span class="k">import</span> <span class="n">basestring</span>
@@ -91,6 +91,20 @@
 <span class="c1">#########################################</span>
 
 <div class="viewcode-block" id="decision_func"><a class="viewcode-back" href="../../../reference/index.html#Contrast.model.model.decision_func">[docs]</a><span class="k">def</span> <span class="nf">decision_func</span><span class="p">(</span><span class="n">contrast</span><span class="p">,</span><span class="n">target_contrast</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">decision_sigma</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">decision_K</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">upper_limit</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">lower_limit</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">return_all</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Decision function that maps contrast values to a proportion of correct response.</span>
+
+<span class="sd">    :Parameters:</span>
+<span class="sd">        contrast : a numpy array or single contrast value</span>
+<span class="sd">        target_contrast : the contrast value of the target_alone, or mu_t</span>
+<span class="sd">        decision_sigma : the standard deviation of the target_alone, or sigma_tau</span>
+<span class="sd">        decision_K : the value K_phi, so sigma_phi = K_phi*sigma_tau</span>
+<span class="sd">        upper_limit : the upper limit of proportion correct resp e.g. 0.85 </span>
+<span class="sd">        lower_limit : the lower limit of proportion correct resp e.g. 0.0</span>
+<span class="sd">        return_all : if True, returns result and foreground and background Jacobians</span>
+
+<span class="sd">    :returns: a numpy array of proportion correct responses, one for each contrast value in the contrast parameter.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>        
     <span class="n">J_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">contrast</span><span class="o">-</span><span class="n">target_contrast</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">decision_sigma</span><span class="p">))))</span>
     <span class="n">J_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">contrast</span><span class="o">-</span><span class="n">target_contrast</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">decision_sigma</span><span class="o">*</span><span class="n">decision_K</span><span class="p">))))</span>
     <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="n">J_f</span><span class="o">-</span><span class="n">J_b</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">upper_limit</span><span class="o">-</span><span class="n">lower_limit</span><span class="p">)</span><span class="o">+</span><span class="n">lower_limit</span>
@@ -100,16 +114,10 @@
         <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="Model"><a class="viewcode-back" href="../../../reference/index.html#Contrast.model.model.Model">[docs]</a><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Documentation for model</span>
+    <span class="sd">&quot;&quot;&quot;Class for building Jacobians and processing an image</span>
 
-<span class="sd">    More documentation</span>
 
-<span class="sd">    :Parameters:</span>
-<span class="sd">        visible : **True** or False</span>
-<span class="sd">            documentation on parameter</span>
-<span class="sd">        newPos : **None** or [x,y]</span>
-<span class="sd">            documentation on parameter</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>        
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">eccentricities</span><span class="o">=</span><span class="p">[</span><span class="mf">3.88</span><span class="p">],</span>
