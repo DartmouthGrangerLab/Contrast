@@ -96,7 +96,7 @@ To run the Herzog experiment with a new est_max value one can edit the parameter
   $ ./herzog.py -model est_max=0.1
 
   
-All the parameters are listed at the top of each experiment file. For the Herzog
+All the parameters are listed at the top of each experiment file. The E_alpha paramer mentioned in the paper appears in the code as est_max. For the Herzog
 experiment the parameters are in herzog.py:
  
 .. code-block:: python
